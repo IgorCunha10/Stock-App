@@ -1,8 +1,10 @@
 package com.stela.stockapp.model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     public String productName, productDescription;
-    public int productQuantity;
+    public int productQuantity, productId;
 
     public Product() {
 
@@ -14,6 +16,14 @@ public class Product {
 
     public String getProductName() {
         return productName;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public int getProductId() {
+        return productId;
     }
 
     public void setProductDescription(String productDescription) {

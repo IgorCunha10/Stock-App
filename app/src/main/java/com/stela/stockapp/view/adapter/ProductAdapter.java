@@ -38,6 +38,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = products.get(position);
 
         holder.Product_Name.setText(product.getProductName());
+        holder.Product_Id.setText(product.getProductId());
         holder.Product_Description.setText(product.getProductDescription());
         holder.Product_Quantity.setText(
                 String.valueOf(product.getProductQuantity())
@@ -49,14 +50,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return products.size();
     }
     class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView Product_Name, Product_Description, Product_Quantity;
+        TextView Product_Name, Product_Description, Product_Quantity, Product_Id;
 
 
         public ProductViewHolder(View itemView) {
             super(itemView);
             Product_Name = itemView.findViewById(R.id.prName);
+            Product_Id = itemView.findViewById(R.id.prId);
             Product_Description = itemView.findViewById(R.id.prDescription);
             Product_Quantity = itemView.findViewById(R.id.prQuantity);
+
 
         }
 
