@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+
+        <TextView
+            android:id="@+id/pageName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register Product"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"
+            />
+
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:textSize="17sp"
+            android:textColor="@color/textPrimary"
+
+            />
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type the product name"
+            android:gravity="center"
+            android:layout_gravity="center"
+
+            />
+
+        <TextView
+            android:id="@+id/productID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product ID"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="17sp"
+            android:textColor="@color/textPrimary"
+            />
+
+        <EditText
+            android:id="@+id/edtID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Type the product id"
+            android:gravity="center"
+
+            />
+
+        <TextView
+            android:id="@+id/productDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product Description"
+            android:textColor="@color/textPrimary"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="17dp"
+            android:padding="10dp"
+
+            />
+
+        <EditText
+            android:id="@+id/edtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type the Product Description"
+            android:gravity="center"
+            android:layout_gravity="center"
+
+            />
+
+        <TextView
+            android:id="@+id/productQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product Quantity"
+            android:textColor="@color/textPrimary"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="17sp"
+
+            />
+
+        <EditText
+            android:id="@+id/edtQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Type the quantity" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar"
+            android:layout_margin="20dp"
+            />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
