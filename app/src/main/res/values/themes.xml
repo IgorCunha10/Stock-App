@@ -1,6 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
+    <style name="ShapeAppearanceOverlay.Material3.Button.50" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
