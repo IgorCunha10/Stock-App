@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="#F5F5F5">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +15,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:background="@color/background"
+            >
 
             <!-- Header -->
             <TextView
@@ -28,7 +30,8 @@
                 android:textStyle="bold"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="8dp"
-                android:letterSpacing="0.02"/>
+                android:letterSpacing="0.02"
+                />
 
             <View
                 android:layout_width="60dp"
@@ -183,22 +186,68 @@
                         android:inputType="number"
                         android:padding="12dp"/>
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Product Quantity Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/productPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Product Price"
+                        android:textSize="14sp"
+                        android:textColor="@color/textPrimary"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <EditText
+                        android:id="@+id/edtPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Type the Price"
+                        android:background="@android:color/transparent"
+                        android:textSize="16sp"
+                        android:inputType="number"
+                        android:padding="12dp"/>
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
 
             <!-- Save Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Salvar"
+                android:text="Save"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:cornerRadius="12dp"
                 app:elevation="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp"
+                app:backgroundTint="@color/buttonColor"
+                />
 
         </LinearLayout>
+
+
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

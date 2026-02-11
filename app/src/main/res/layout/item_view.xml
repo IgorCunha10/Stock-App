@@ -120,6 +120,39 @@
                     android:textColor="@color/textPrimary"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#F5F5F5"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/prpriceL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textSize="12sp"
+                    android:textColor="@color/textPrimary"
+                    android:alpha="0.6"
+                    android:textStyle="bold"
+                    android:paddingBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/prPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$20"
+                    android:textSize="16sp"
+                    android:textColor="@color/textPrimary"/>
+            </LinearLayout>
+
+
+
+
+
+
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
