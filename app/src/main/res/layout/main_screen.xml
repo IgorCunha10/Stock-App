@@ -64,6 +64,21 @@
         tools:listitem="@layout/item_view" />
 
     <!-- Botão flutuante -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_dialog_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:elevation="6dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="92dp"
+        app:backgroundTint="@color/buttonColor"
+        />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNewProduct"
         android:layout_width="wrap_content"
@@ -71,12 +86,11 @@
         android:layout_marginRight="24dp"
         android:layout_marginBottom="32dp"
         android:contentDescription="Add product"
+        app:backgroundTint="@color/buttonColor"
         app:elevation="6dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/buttonColor"
-        />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

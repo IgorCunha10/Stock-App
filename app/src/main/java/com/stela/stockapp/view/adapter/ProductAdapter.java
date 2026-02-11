@@ -43,6 +43,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.Product_Quantity.setText(
                 String.valueOf(product.getProductQuantity())
         );
+        holder.Product_Price.setText(
+                String.valueOf(product.getProductPrice())
+        );
+
     }
 
     @Override
@@ -50,7 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return products.size();
     }
     class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView Product_Name, Product_Description, Product_Quantity, Product_Id;
+        TextView Product_Name, Product_Description, Product_Quantity, Product_Id, Product_Price;
 
 
         public ProductViewHolder(View itemView) {
@@ -59,7 +63,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             Product_Id = itemView.findViewById(R.id.prId);
             Product_Description = itemView.findViewById(R.id.prDescription);
             Product_Quantity = itemView.findViewById(R.id.prQuantity);
-
+            Product_Price = itemView.findViewById(R.id.prPrice);
 
         }
 

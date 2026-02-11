@@ -27,51 +27,74 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Product> productList;
     private ProductAdapter adapter;
+    private FloatingActionButton fabNewProduct;
+    private FloatingActionButton fabInfo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.main_screen);
-        ConstraintLayout mainLayout = findViewById(R.id.main);
-        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, insets) -> {
-            int bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
-            v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), bottomInset + 24);
-            return insets;
 
+        initView();
+        initListeners();
+        initInsets();
+        initRecycler();
+        initActivityResults();
 
-        });
+}
 
-        FloatingActionButton fabNewProduct = findViewById(R.id.fabNewProduct);
-        recyclerView = findViewById(R.id.recyclerView);
-        productList = new ArrayList<>();
-        adapter = new ProductAdapter(this, productList);
+private void initInsets(){
+    ConstraintLayout mainLayout = findViewById(R.id.main);
+    ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, insets) -> {
+        int bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
+        v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), bottomInset + 24);
+        return insets;
+    });
+}
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+private void initView() {
+    fabNewProduct = findViewById(R.id.fabNewProduct);
+    fabInfo = findViewById(R.id.fabInfo);
+    recyclerView = findViewById(R.id.recyclerView);
+}
 
-      addProductLauncher = registerForActivityResult(
-              new ActivityResultContracts.StartActivityForResult(),
-              result  -> {
-                  if (result.getResultCode() == RESULT_OK) {
-                      Intent data = result.getData();
-                      if (data != null && data.hasExtra("product")) {
-                          Product product = (Product) data.getSerializableExtra("product");
-                          productList.add(product);
+private void initRecycler(){
+    productList = new ArrayList<>();
+    adapter = new ProductAdapter(this, productList);
 
-                          adapter.notifyItemInserted(productList.size() - 1);
-                      }
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setAdapter(adapter);
+}
 
-                  }
-              });
+private void initActivityResults(){
+    addProductLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result  -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null && data.hasExtra("product")) {
+                        Product product = (Product) data.getSerializableExtra("product");
+                        productList.add(product);
+                        adapter.notifyItemInserted(productList.size() - 1);
+                    }
 
+                }
+            });
 
+}
+private void initListeners() {
 
         fabNewProduct.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
-            addProductLauncher.launch(intent);
-        });
+        Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
+        addProductLauncher.launch(intent);
+    });
 
+        fabInfo.setOnClickListener(view -> {
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        addProductLauncher.launch(intent);
+    });
 
 }
 
