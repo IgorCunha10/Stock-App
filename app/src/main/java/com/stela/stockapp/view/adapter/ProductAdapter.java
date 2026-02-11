@@ -23,7 +23,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public ProductAdapter(Context context, List<Product> products) {
         this.context = context;
         this.products = products;
-
     }
 
     @Override
@@ -38,24 +37,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = products.get(position);
 
         holder.Product_Name.setText(product.getProductName());
-        holder.Product_Id.setText(product.getProductId());
+        holder.Product_Id.setText(String.valueOf(product.getProductId())); // ✅ corrigido
         holder.Product_Description.setText(product.getProductDescription());
-        holder.Product_Quantity.setText(
-                String.valueOf(product.getProductQuantity())
-        );
-        holder.Product_Price.setText(
-                String.valueOf(product.getProductPrice())
-        );
-
+        holder.Product_Quantity.setText(String.valueOf(product.getProductQuantity()));
+        holder.Product_Price.setText(String.valueOf(product.getProductPrice()));
     }
 
     @Override
     public int getItemCount() {
-        return products.size();
+        return products != null ? products.size() : 0;
     }
+
     class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView Product_Name, Product_Description, Product_Quantity, Product_Id, Product_Price;
-
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -64,13 +58,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             Product_Description = itemView.findViewById(R.id.prDescription);
             Product_Quantity = itemView.findViewById(R.id.prQuantity);
             Product_Price = itemView.findViewById(R.id.prPrice);
-
         }
-
     }
 
-
-
-
-
+    public void setProductList(List<Product> products) {
+        this.products = products;
+        notifyDataSetChanged();
+    }
 }

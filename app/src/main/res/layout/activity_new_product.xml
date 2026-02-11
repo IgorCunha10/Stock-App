@@ -75,42 +75,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Product ID Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/productID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Product ID"
-                        android:textSize="14sp"
-                        android:textColor="@color/textPrimary"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp"/>
-
-                    <EditText
-                        android:id="@+id/edtID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Type the product id"
-                        android:background="@android:color/transparent"
-                        android:textSize="16sp"
-                        android:inputType="textNoSuggestions"
-                        android:padding="12dp"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
             <!-- Product Description Card -->
             <com.google.android.material.card.MaterialCardView
@@ -231,7 +195,7 @@
 
             <!-- Save Button -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button"
+                android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:text="Save"

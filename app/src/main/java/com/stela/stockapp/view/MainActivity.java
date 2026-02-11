@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
+import com.stela.stockapp.data.ProductsRepository;
 import com.stela.stockapp.model.Product;
 import com.stela.stockapp.view.adapter.ProductAdapter;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ProductAdapter adapter;
     private FloatingActionButton fabNewProduct;
     private FloatingActionButton fabInfo;
+    private ProductsRepository repo;
 
 
     @Override
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         initInsets();
         initRecycler();
         initActivityResults();
+        initData();
 
 }
 
@@ -68,23 +71,31 @@ private void initRecycler(){
     recyclerView.setAdapter(adapter);
 }
 
-private void initActivityResults(){
-    addProductLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result  -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    Intent data = result.getData();
-                    if (data != null && data.hasExtra("product")) {
-                        Product product = (Product) data.getSerializableExtra("product");
-                        productList.add(product);
-                        adapter.notifyItemInserted(productList.size() - 1);
+    private void initData() {
+        repo = ProductsRepository.getInstance(this);
+        repo.getAll().observe(this, products -> {
+            adapter.setProductList(products);
+        });
+    }
+
+
+    private void initActivityResults(){
+        addProductLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result  -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null && data.hasExtra("product")) {
+                            Product product =
+                                    (Product) data.getSerializableExtra("product");
+
+                            repo.addProduct(product);
+                        }
                     }
+                });
+    }
 
-                }
-            });
-
-}
-private void initListeners() {
+    private void initListeners() {
 
         fabNewProduct.setOnClickListener(view -> {
         Intent intent = new Intent(MainActivity.this, NewProductActivity.class);

@@ -1,13 +1,30 @@
 package com.stela.stockapp.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+
+@Entity(tableName = "products")
 public class Product implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    public int productId;
     public String productName, productDescription;
-    public int productQuantity, productId, productPrice;
+    public int productQuantity;
+    public double productPrice;
+
+    public Product(String productName, int productId, String productDescription,  int productQuantity, double productPrice) {
+
+        this.productName = productName;
+        this.productId = productId;
+        this.productDescription = productDescription;
+        this.productQuantity = productQuantity;
+        this.productPrice = productPrice;
+    }
 
     public Product() {
-
     }
 
     public void setProductName(String productName) {
@@ -42,11 +59,11 @@ public class Product implements Serializable {
         return productQuantity;
     }
 
-    public void setProductPrice(int productPrice) {
+    public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
 
-    public int getProductPrice() {
+    public double getProductPrice() {
         return productPrice;
     }
 
