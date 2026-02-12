@@ -19,6 +19,7 @@ public interface ProductsDao {
 
     @Query("SELECT * FROM products")
     LiveData<List<Product>> getAll();
+
     @Insert
     void insert(Product product);
 
@@ -27,8 +28,6 @@ public interface ProductsDao {
 
     @Delete
     void delete(Product product);
-
-
 
 
 }

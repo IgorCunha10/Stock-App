@@ -15,7 +15,7 @@ public class Product implements Serializable {
     public int productQuantity;
     public double productPrice;
 
-    public Product(String productName, String productDescription,  int productQuantity, double productPrice) {
+    public Product(String productName, String productDescription, int productQuantity, double productPrice) {
 
         this.productName = productName;
         this.productDescription = productDescription;
@@ -54,7 +54,7 @@ public class Product implements Serializable {
         this.productQuantity = productQuantity;
     }
 
-    public int getProductQuantity () {
+    public int getProductQuantity() {
         return productQuantity;
     }
 
@@ -65,7 +65,6 @@ public class Product implements Serializable {
     public double getProductPrice() {
         return productPrice;
     }
-
 
 
 }

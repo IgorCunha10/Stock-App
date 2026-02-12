@@ -19,7 +19,7 @@ import com.stela.stockapp.model.Product;
 
 public class NewProductActivity extends AppCompatActivity {
 
-   private Product actualProduct;
+    private Product actualProduct;
     private EditText edtName, edtDescription, edtId, edtQuantity, edtPrice, edtDate;
     private TextView pageName;
     private Button saveButton;
@@ -34,19 +34,19 @@ public class NewProductActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_new_product);
 
-    initView();
-    initData();
-    handleIntentDats();
-    initListeners();
+        initView();
+        initData();
+        handleIntentDats();
+        initListeners();
 
     }
 
     private void handleIntentDats() {
         Intent intent = getIntent();
-        if(intent.hasExtra("products")) {
+        if (intent.hasExtra("product")) {
             isEdit = true;
             actualProduct = (Product) intent.getSerializableExtra("product");
-            position = intent.getIntExtra("position", - 1);
+            position = intent.getIntExtra("position", -1);
 
             loadData();
             configEditScreen();
@@ -64,17 +64,17 @@ public class NewProductActivity extends AppCompatActivity {
 
     private void loadData() {
         edtName.setText(actualProduct.getProductName());
-        edtId.setText(actualProduct.getProductId());
         edtDescription.setText(actualProduct.getProductDescription());
-        edtQuantity.setText(actualProduct.getProductQuantity());
+        edtQuantity.setText(String.valueOf(actualProduct.getProductQuantity()));
         edtPrice.setText(String.valueOf(actualProduct.getProductPrice()));
 
     }
 
     private void configEditScreen() {
-            pageName.setText("Edit Product");
-            saveButton.setText("Save Changes");
+        pageName.setText("Edit Product");
+        saveButton.setText("Save Changes");
     }
+
     private void initData() {
         repo = ProductsRepository.getInstance(NewProductActivity.this);
     }
@@ -97,7 +97,7 @@ public class NewProductActivity extends AppCompatActivity {
 
             String priceStr = edtPrice.getText().toString();
 
-            if(!priceStr.isBlank()) {
+            if (!priceStr.isBlank()) {
                 try {
                     price = Double.parseDouble(priceStr);
                 } catch (Exception e) {
@@ -106,7 +106,7 @@ public class NewProductActivity extends AppCompatActivity {
             }
 
             if (name.isBlank() || description.isBlank()) {
-                Toast.makeText(this,"Complete all informations", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Complete all informations", Toast.LENGTH_SHORT).show();
             }
 
             Product product = new Product();
@@ -115,7 +115,7 @@ public class NewProductActivity extends AppCompatActivity {
             product.setProductDescription(description);
             product.setProductQuantity(quantity);
 
-            if(isEdit) {
+            if (isEdit) {
                 actualProduct.setProductName(name);
                 actualProduct.setProductDescription(description);
                 actualProduct.setProductQuantity(quantity);
@@ -126,23 +126,23 @@ public class NewProductActivity extends AppCompatActivity {
 
             } else {
                 Product newProduct = new Product(
-                       name,
-                       description,
-                       quantity,
-                       price
+                        name,
+                        description,
+                        quantity,
+                        price
                 );
                 repo.addProduct(newProduct);
             }
 
             finish();
             clearForm();
-            
+
         });
 
 
     }
 
-    private void clearForm(){
+    private void clearForm() {
         edtName.setText("");
         edtDescription.setText("");
     }
