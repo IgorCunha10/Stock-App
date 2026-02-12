@@ -49,32 +49,32 @@ public class MainActivity extends AppCompatActivity {
         initData();
         initActivityResults();
 
-}
+    }
 
-private void initInsets(){
-    ConstraintLayout mainLayout = findViewById(R.id.main);
-    ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, insets) -> {
-        int bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
-        v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), bottomInset + 24);
-        return insets;
-    });
-}
+    private void initInsets() {
+        ConstraintLayout mainLayout = findViewById(R.id.main);
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, insets) -> {
+            int bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom;
+            v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), bottomInset + 24);
+            return insets;
+        });
+    }
 
-private void initView() {
-    fabNewProduct = findViewById(R.id.fabNewProduct);
-    fabInfo = findViewById(R.id.fabInfo);
-    editBtn = findViewById(R.id.editBtn);
-    deleteBtn = findViewById(R.id.deleteBtn);
-    recyclerView = findViewById(R.id.recyclerView);
-}
+    private void initView() {
+        fabNewProduct = findViewById(R.id.fabNewProduct);
+        fabInfo = findViewById(R.id.fabInfo);
+        editBtn = findViewById(R.id.editBtn);
+        deleteBtn = findViewById(R.id.deleteBtn);
+        recyclerView = findViewById(R.id.recyclerView);
+    }
 
-private void initRecycler(){
-    productList = new ArrayList<>();
-    adapter = new ProductAdapter(this, productList);
+    private void initRecycler() {
+        productList = new ArrayList<>();
+        adapter = new ProductAdapter(this, productList);
 
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.setAdapter(adapter);
-}
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
 
     private void initData() {
         repo = ProductsRepository.getInstance(this);
@@ -84,10 +84,10 @@ private void initRecycler(){
     }
 
 
-    private void initActivityResults(){
+    private void initActivityResults() {
         addProductLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                result  -> {
+                result -> {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent data = result.getData();
                         if (data != null && data.hasExtra("product")) {
@@ -128,8 +128,6 @@ private void initRecycler(){
             }
         });
     }
-
-
 
 
 }
