@@ -205,7 +205,7 @@
                         android:id="@+id/prmvType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Entry"
+                        android:text="Create"
                         android:textSize="16sp"
                         android:textColor="@color/textPrimary"/>
                 </LinearLayout>

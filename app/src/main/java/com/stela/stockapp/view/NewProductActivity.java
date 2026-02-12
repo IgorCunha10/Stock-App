@@ -9,13 +9,10 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.stela.stockapp.R;
 import com.stela.stockapp.data.ProductsRepository;
-import com.stela.stockapp.model.Product;
+import com.stela.stockapp.model.product.Product;
 
 public class NewProductActivity extends AppCompatActivity {
 
