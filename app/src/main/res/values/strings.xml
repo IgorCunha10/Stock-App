@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">stockapp</string>
+    <string name="stock_app">Stock App\n</string>
 </resources>

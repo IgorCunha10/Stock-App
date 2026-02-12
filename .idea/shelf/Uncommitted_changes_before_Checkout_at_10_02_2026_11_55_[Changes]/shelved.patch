@@ -1,0 +1,28 @@
+Index: app/src/main/java/com/stela/stockapp/view/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.stela.stockapp.view;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.app.AppCompatDelegate;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\nimport com.stela.stockapp.R;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.main_screen);\r\n\r\n        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.NightMode);\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/stela/stockapp/view/MainActivity.java b/app/src/main/java/com/stela/stockapp/view/MainActivity.java
+--- a/app/src/main/java/com/stela/stockapp/view/MainActivity.java	(revision 1559110ed64f70331ccb77155a6a6a68d9a62780)
++++ b/app/src/main/java/com/stela/stockapp/view/MainActivity.java	(date 1770734517751)
+@@ -4,10 +4,7 @@
+ 
+ import androidx.activity.EdgeToEdge;
+ import androidx.appcompat.app.AppCompatActivity;
+-import androidx.appcompat.app.AppCompatDelegate;
+-import androidx.core.graphics.Insets;
+-import androidx.core.view.ViewCompat;
+-import androidx.core.view.WindowInsetsCompat;
++
+ 
+ import com.stela.stockapp.R;
+ 
+@@ -19,6 +16,5 @@
+         EdgeToEdge.enable(this);
+         setContentView(R.layout.main_screen);
+ 
+-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.NightMode);
+     }
+ }
+\ No newline at end of file

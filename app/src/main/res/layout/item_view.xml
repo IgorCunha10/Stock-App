@@ -1,94 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:elevation="20dp"
-        android:translationZ="10dp"
-        android:layout_margin="10dp"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        >
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/prName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/textPrimary"
-                android:padding="20sp"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:text="Product Name"
+                android:textColor="@color/textPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:paddingBottom="16dp"/>
 
-                />
+            <View
+                android:layout_width="60dp"
+                android:layout_height="3dp"
+                android:background="@color/textPrimary"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:alpha="0.3"/>
 
-
-            <TextView
-                android:id="@+id/prId"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="Product ID"
-                android:padding="10dp"
-                android:textColor="@color/textPrimary"
-                />
+                android:orientation="vertical"
+                android:background="#F5F5F5"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product ID"
+                    android:textSize="12sp"
+                    android:textColor="@color/textPrimary"
+                    android:alpha="0.6"
+                    android:textStyle="bold"
+                    android:paddingBottom="4dp"/>
 
-            <TextView
-                android:id="@+id/prDescription"
+                <TextView
+                    android:id="@+id/prId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product ID"
+                    android:textSize="16sp"
+                    android:textColor="@color/textPrimary"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Product Description"
-                android:textColor="@color/textPrimary"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                />
+                android:orientation="vertical"
+                android:background="#F5F5F5"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp">
 
-        <TextView
-            android:id="@+id/prQuantityL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Quantity"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:textColor="@color/textPrimary"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textSize="12sp"
+                    android:textColor="@color/textPrimary"
+                    android:alpha="0.6"
+                    android:textStyle="bold"
+                    android:paddingBottom="4dp"/>
 
-            />
+                <TextView
+                    android:id="@+id/prDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Description"
+                    android:textSize="16sp"
+                    android:textColor="@color/textPrimary"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/prQuantity"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="20"
-                android:textColor="@color/textPrimary"
-                android:padding="10dp"
-                />
+                android:orientation="vertical"
+                android:background="#F5F5F5"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/prQuantityL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:textSize="12sp"
+                    android:textColor="@color/textPrimary"
+                    android:alpha="0.6"
+                    android:textStyle="bold"
+                    android:paddingBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/prQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:textSize="16sp"
+                    android:textColor="@color/textPrimary"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#F5F5F5"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/prpriceL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textSize="12sp"
+                    android:textColor="@color/textPrimary"
+                    android:alpha="0.6"
+                    android:textStyle="bold"
+                    android:paddingBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/prPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$20"
+                    android:textSize="16sp"
+                    android:textColor="@color/textPrimary"/>
+            </LinearLayout>
+
+
+
+
+
 
 
         </LinearLayout>
 
-
-    </androidx.cardview.widget.CardView>
-
-
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
