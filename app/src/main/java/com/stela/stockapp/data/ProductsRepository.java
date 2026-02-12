@@ -11,12 +11,14 @@ import androidx.room.Dao;
 
 import java.util.List;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class ProductsRepository {
 
     private static ProductsRepository instance;
     private final ProductsDao productsDao;
-
-    private String text;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static synchronized ProductsRepository getInstance(Context context) {
         if (instance == null) {
@@ -34,15 +36,20 @@ public class ProductsRepository {
     }
 
     public void addProduct(Product product) {
-        productsDao.insert(product);
+        executor.execute(() -> {
+            productsDao.insert(product);
+        });
     }
 
     public void updateProduct(Product product) {
-        productsDao.update(product);
+        executor.execute(() -> {
+            productsDao.update(product);
+        });
     }
 
     public void deleteProduct(Product product) {
-        productsDao.delete(product);
+        executor.execute(() -> {
+            productsDao.delete(product);
+        });
     }
-
 }

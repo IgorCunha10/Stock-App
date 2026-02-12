@@ -83,7 +83,6 @@ public class NewProductActivity extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             String name = edtName.getText().toString();
             String description = edtDescription.getText().toString();
-            int id = 0;
             int quantity = 0;
             double price = 0;
 
@@ -128,7 +127,6 @@ public class NewProductActivity extends AppCompatActivity {
             } else {
                 Product newProduct = new Product(
                        name,
-                       id += id,
                        description,
                        quantity,
                        price

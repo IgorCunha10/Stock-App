@@ -39,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.main_screen);
 
-        initView();
-        initListeners();
         initInsets();
+        initView();
         initRecycler();
-        initActivityResults();
+        initListeners();
         initData();
+        initActivityResults();
 
 }
 
