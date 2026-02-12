@@ -43,7 +43,7 @@ public class NewProductActivity extends AppCompatActivity {
 
     private void handleIntentDats() {
         Intent intent = getIntent();
-        if(intent.hasExtra("products")) {
+        if(intent.hasExtra("product")) {
             isEdit = true;
             actualProduct = (Product) intent.getSerializableExtra("product");
             position = intent.getIntExtra("position", - 1);
@@ -64,9 +64,8 @@ public class NewProductActivity extends AppCompatActivity {
 
     private void loadData() {
         edtName.setText(actualProduct.getProductName());
-        edtId.setText(actualProduct.getProductId());
         edtDescription.setText(actualProduct.getProductDescription());
-        edtQuantity.setText(actualProduct.getProductQuantity());
+        edtQuantity.setText(String.valueOf(actualProduct.getProductQuantity()));
         edtPrice.setText(String.valueOf(actualProduct.getProductPrice()));
 
     }
@@ -126,10 +125,10 @@ public class NewProductActivity extends AppCompatActivity {
 
             } else {
                 Product newProduct = new Product(
-                       name,
-                       description,
-                       quantity,
-                       price
+                        name,
+                        description,
+                        quantity,
+                        price
                 );
                 repo.addProduct(newProduct);
             }

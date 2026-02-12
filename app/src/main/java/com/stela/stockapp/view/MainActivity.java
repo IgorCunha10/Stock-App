@@ -2,6 +2,7 @@ package com.stela.stockapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabNewProduct;
     private FloatingActionButton fabInfo;
     private ProductsRepository repo;
+    private ImageButton editBtn;
+    private ImageButton deleteBtn;
 
 
     @Override
@@ -60,6 +63,8 @@ private void initInsets(){
 private void initView() {
     fabNewProduct = findViewById(R.id.fabNewProduct);
     fabInfo = findViewById(R.id.fabInfo);
+    editBtn = findViewById(R.id.editBtn);
+    deleteBtn = findViewById(R.id.deleteBtn);
     recyclerView = findViewById(R.id.recyclerView);
 }
 
@@ -98,15 +103,33 @@ private void initRecycler(){
     private void initListeners() {
 
         fabNewProduct.setOnClickListener(view -> {
-        Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
-        addProductLauncher.launch(intent);
-    });
+            Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
+            addProductLauncher.launch(intent);
+        });
 
         fabInfo.setOnClickListener(view -> {
-        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        addProductLauncher.launch(intent);
-    });
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            startActivity(intent);
+        });
+
+
+        adapter.setOnItemActionListener(new ProductAdapter.OnItemActionListener() {
+
+            @Override
+            public void onEditClick(Product product) {
+                Intent intent = new Intent(MainActivity.this, NewProductActivity.class);
+                intent.putExtra("product", product);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onDeleteClick(Product product) {
+                repo.deleteProduct(product);
+            }
+        });
+    }
+
+
+
 
 }
-
-    }
