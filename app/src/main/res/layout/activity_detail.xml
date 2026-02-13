@@ -41,11 +41,11 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerHistory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/detail_item_view"
-            android:padding="8dp"
             android:background="@color/background"
-            />
+            android:padding="8dp"
+            tools:listitem="@layout/detail_item_view" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
