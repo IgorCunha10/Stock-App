@@ -47,7 +47,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
         holder.productAction.setText(history.getAction());
 
-        long timestamp = history.getTimeStamp(); // supondo que seja em ms
+        long timestamp = history.getTimeStamp();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         holder.productTimestamp.setText(sdf.format(new Date(timestamp)));
 
