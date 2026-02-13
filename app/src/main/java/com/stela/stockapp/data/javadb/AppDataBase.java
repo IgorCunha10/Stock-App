@@ -15,7 +15,9 @@ import com.stela.stockapp.model.product.Product;
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract ProductsDao productsDao();
+
     public abstract HistoryDao historyDao();
+
     private static AppDataBase instance;
 
 
@@ -25,10 +27,10 @@ public abstract class AppDataBase extends RoomDatabase {
             synchronized (AppDataBase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            AppDataBase.class,
-                            "estoque_db"
-                    ).addMigrations(MIGRATION_2_3)
+                                    context.getApplicationContext(),
+                                    AppDataBase.class,
+                                    "estoque_db"
+                            ).addMigrations(MIGRATION_2_3)
 
                             .build();
                 }

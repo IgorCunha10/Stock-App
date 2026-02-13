@@ -20,6 +20,4 @@ public interface HistoryDao {
     LiveData<List<ProductHistory>> getAllHistory();
 
 
-
-
 }
