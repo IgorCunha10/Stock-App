@@ -19,7 +19,9 @@ O ambiente de desenvolvimento escolhido para criar essa aplicação foi o **Andr
 
 ### Linguagem
 A principal linguagem utilizada para criar essa aplicação Android foi o **Java**.  
-O Java é uma linguagem amplamente adotada no desenvolvimento mobile. Apesar do Kotlin existir e estar bem estabelecido no desenvolvimento Android, o Java também pode ser utilizado para entregar solidez e desempenho em aplicações móveis.
+O Java é uma linguagem amplamente adotada no desenvolvimento mobile. 
+Apesar do Kotlin existir e estar bem estabelecido no desenvolvimento Android, 
+o Java também pode ser utilizado para entregar solidez e desempenho em aplicações móveis.
 
 ### Banco de Dados
 O banco de dados adotado na criação do app foi o **Room**.
