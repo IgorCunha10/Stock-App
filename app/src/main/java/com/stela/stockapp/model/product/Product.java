@@ -1,4 +1,4 @@
-package com.stela.stockapp.model;
+package com.stela.stockapp.model.product;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

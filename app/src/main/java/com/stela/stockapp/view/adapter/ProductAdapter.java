@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.stockapp.R;
-import com.stela.stockapp.model.Product;
+import com.stela.stockapp.model.product.Product;
 
 import java.util.List;
 

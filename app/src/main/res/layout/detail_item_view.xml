@@ -1,249 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:ignore="MissingConstraints">
+        android:layout_margin="4dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/prName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="8dp"
+                android:text="Product Name"
+                android:textColor="@color/textPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp"
+                android:alpha="0.3"
+                android:background="@color/textPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingBottom="8dp">
 
                 <TextView
-                    android:id="@+id/prName"
+                    android:id="@+id/prmvIdL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Product Name"
+                    android:alpha="0.6"
+                    android:text="Product ID"
                     android:textColor="@color/textPrimary"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:paddingBottom="16dp"/>
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
-                <View
-                    android:layout_width="60dp"
-                    android:layout_height="3dp"
-                    android:background="@color/textPrimary"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="20dp"
-                    android:alpha="0.3"/>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/prmvId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#F5F5F5"
-                    android:padding="16dp"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:id="@+id/prmvIdL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Product ID"
-                        android:textSize="12sp"
-                        android:textColor="@color/textPrimary"
-                        android:alpha="0.6"
-                        android:textStyle="bold"
-                        android:paddingBottom="4dp"/>
-
-                    <TextView
-                        android:id="@+id/prmvId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Product ID"
-                        android:textSize="16sp"
-                        android:textColor="@color/textPrimary"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#F5F5F5"
-                    android:padding="16dp"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:id="@+id/prmvDescriptionL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Description"
-                        android:textSize="12sp"
-                        android:textColor="@color/textPrimary"
-                        android:alpha="0.6"
-                        android:textStyle="bold"
-                        android:paddingBottom="4dp"/>
-
-                    <TextView
-                        android:id="@+id/prmvDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Product Description"
-                        android:textSize="16sp"
-                        android:textColor="@color/textPrimary"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#F5F5F5"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/prmvQuantityL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Quantity"
-                        android:textSize="12sp"
-                        android:textColor="@color/textPrimary"
-                        android:alpha="0.6"
-                        android:textStyle="bold"
-                        android:paddingBottom="4dp"/>
-
-                    <TextView
-                        android:id="@+id/prmvQuantity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="20"
-                        android:textSize="16sp"
-                        android:textColor="@color/textPrimary"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#F5F5F5"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/prmvpriceL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Price"
-                        android:textSize="12sp"
-                        android:textColor="@color/textPrimary"
-                        android:alpha="0.6"
-                        android:textStyle="bold"
-                        android:paddingBottom="4dp"/>
-
-                    <TextView
-                        android:id="@+id/prmvPrice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="$20"
-                        android:textSize="16sp"
-                        android:textColor="@color/textPrimary"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#F5F5F5"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/prmvDateL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Date"
-                        android:textSize="12sp"
-                        android:textColor="@color/textPrimary"
-                        android:alpha="0.6"
-                        android:textStyle="bold"
-                        android:paddingBottom="4dp"/>
-
-                    <TextView
-                        android:id="@+id/prmvDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="13/11/2025"
-                        android:textSize="16sp"
-                        android:textColor="@color/textPrimary"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#F5F5F5"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/prmvTypeL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Type"
-                        android:textSize="12sp"
-                        android:textColor="@color/textPrimary"
-                        android:alpha="0.6"
-                        android:textStyle="bold"
-                        android:paddingBottom="4dp"/>
-
-                    <TextView
-                        android:id="@+id/prmvType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Entry"
-                        android:textSize="16sp"
-                        android:textColor="@color/textPrimary"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#F5F5F5"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/prmvSourceL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Source"
-                        android:textSize="12sp"
-                        android:textColor="@color/textPrimary"
-                        android:alpha="0.6"
-                        android:textStyle="bold"
-                        android:paddingBottom="4dp"/>
-
-                    <TextView
-                        android:id="@+id/prmvSource"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Manual"
-                        android:textSize="16sp"
-                        android:textColor="@color/textPrimary"/>
-                </LinearLayout>
-
-
+                    android:text="12345"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/prmvDescriptionL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="Description"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/prmvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product description"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/prmvQuantityL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="Quantity"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/prmvQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/prmvPriceL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="Price"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/prmvPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$20.00"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/prmvDateL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="Date"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/prmvDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="13/11/2025"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/prmvTypeL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="Action"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/prmvType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Create"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/prmvSourceL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="Source"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/prmvSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Manual"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

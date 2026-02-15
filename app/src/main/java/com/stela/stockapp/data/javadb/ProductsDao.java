@@ -4,12 +4,11 @@ package com.stela.stockapp.data.javadb;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
-import androidx.room.Index;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.stela.stockapp.model.Product;
+import com.stela.stockapp.model.product.Product;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public interface ProductsDao {
     LiveData<List<Product>> getAll();
 
     @Insert
-    void insert(Product product);
+    long insert(Product product);
 
     @Update
     void update(Product product);

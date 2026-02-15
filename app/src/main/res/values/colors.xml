@@ -3,4 +3,5 @@
     <color name="background">#F5F5F5</color>
     <color name="textPrimary">#000000</color>
     <color name="buttonColor">#0077b6</color>
+    <color name="backgroundAlt">#e9ecef</color>
 </resources>

@@ -1,19 +1,25 @@
 package com.stela.stockapp.data.javadb;
 
+import static com.stela.stockapp.model.history.ProductHistory.MIGRATION_2_3;
+
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.stela.stockapp.model.Product;
+import com.stela.stockapp.model.history.ProductHistory;
+import com.stela.stockapp.model.product.Product;
 
-@Database(entities = {Product.class}, version = 2)
+@Database(entities = {Product.class, ProductHistory.class}, version = 3)
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract ProductsDao productsDao();
 
+    public abstract HistoryDao historyDao();
+
     private static AppDataBase instance;
+
 
     public static synchronized AppDataBase getInstance(Context context) {
 
@@ -21,10 +27,12 @@ public abstract class AppDataBase extends RoomDatabase {
             synchronized (AppDataBase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            AppDataBase.class,
-                            "estoque_db"
-                    ).build();
+                                    context.getApplicationContext(),
+                                    AppDataBase.class,
+                                    "estoque_db"
+                            ).addMigrations(MIGRATION_2_3)
+
+                            .build();
                 }
             }
         }

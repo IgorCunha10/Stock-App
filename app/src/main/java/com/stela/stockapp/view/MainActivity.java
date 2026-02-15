@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
 import com.stela.stockapp.data.ProductsRepository;
-import com.stela.stockapp.model.Product;
+import com.stela.stockapp.model.product.Product;
 import com.stela.stockapp.view.adapter.ProductAdapter;
 
 import java.util.ArrayList;
