@@ -1,6 +1,6 @@
-package com.stela.stockapp.data.javadb;
+package com.stela.stockapp.data.local;
 
-import static com.stela.stockapp.model.history.ProductHistory.MIGRATION_2_3;
+import static com.stela.stockapp.data.model.history.ProductHistory.MIGRATION_2_3;
 
 import android.content.Context;
 
@@ -8,8 +8,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.stela.stockapp.model.history.ProductHistory;
-import com.stela.stockapp.model.product.Product;
+import com.stela.stockapp.data.model.history.ProductHistory;
+import com.stela.stockapp.data.model.product.Product;
 
 @Database(entities = {Product.class, ProductHistory.class}, version = 3)
 public abstract class AppDataBase extends RoomDatabase {

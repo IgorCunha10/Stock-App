@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.DetailActivity"
+            android:name=".ui.movimentation.MovimentationActivity"
             android:exported="false" />
         <activity
-            android:name=".view.NewProductActivity"
+            android:name=".ui.product.NewProductActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

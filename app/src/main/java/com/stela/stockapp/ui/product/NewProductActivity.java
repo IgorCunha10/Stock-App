@@ -1,4 +1,4 @@
-package com.stela.stockapp.view;
+package com.stela.stockapp.ui.product;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.stela.stockapp.R;
-import com.stela.stockapp.data.ProductsRepository;
-import com.stela.stockapp.model.product.Product;
+import com.stela.stockapp.data.repository.ProductsRepository;
+import com.stela.stockapp.data.model.product.Product;
 
 public class NewProductActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class NewProductActivity extends AppCompatActivity {
     private Button saveButton;
     private boolean isEdit = false;
 
-    private ProductsRepository repo;
+    private NewProductViewModel viewModel;
 
 
     @Override
@@ -31,8 +32,19 @@ public class NewProductActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_new_product);
 
+        viewModel = new ViewModelProvider(this)
+                .get(NewProductViewModel.class);
+
+        viewModel.getSaveSuccess().observe(this, success -> {
+            if (success) {
+                Toast.makeText(this,
+                        isEdit ? "Product updated successfully" : "Product created successfully",
+                        Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
         initView();
-        initData();
         handleIntentDats();
         initListeners();
 
@@ -72,9 +84,6 @@ public class NewProductActivity extends AppCompatActivity {
         saveButton.setText("Save Changes");
     }
 
-    private void initData() {
-        repo = ProductsRepository.getInstance(NewProductActivity.this);
-    }
 
     private void initListeners() {
         saveButton.setOnClickListener(v -> {
@@ -118,7 +127,7 @@ public class NewProductActivity extends AppCompatActivity {
                 actualProduct.setProductQuantity(quantity);
                 actualProduct.setProductPrice(price);
 
-                repo.updateProduct(actualProduct);
+                viewModel.saveProduct(actualProduct, true);
                 Toast.makeText(this, "Product updated succesfully", Toast.LENGTH_SHORT).show();
 
             } else {
@@ -128,10 +137,11 @@ public class NewProductActivity extends AppCompatActivity {
                         quantity,
                         price
                 );
-                repo.addProduct(newProduct);
+
             }
 
-            finish();
+            viewModel.saveProduct(product, isEdit);
+
             clearForm();
 
         });

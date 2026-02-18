@@ -1,4 +1,4 @@
-package com.stela.stockapp.view;
+package com.stela.stockapp.ui.movimentation;
 
 import android.os.Bundle;
 
@@ -7,21 +7,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.stockapp.R;
-import com.stela.stockapp.data.javadb.AppDataBase;
-import com.stela.stockapp.data.javadb.HistoryDao;
-import com.stela.stockapp.view.adapter.HistoryAdapter;
+import com.stela.stockapp.data.local.AppDataBase;
+import com.stela.stockapp.data.local.HistoryDao;
 
 import java.util.ArrayList;
 
-public class DetailActivity extends AppCompatActivity {
+public class MovimentationActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private HistoryAdapter historyAdapter;
-    private HistoryDao historyDao;
+    private MovimentationAdapter movimentationAdapter;
+    private MovimentationViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,14 @@ public class DetailActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_detail);
 
-        initInsets();
+        viewModel = new ViewModelProvider(this)
+                .get(MovimentationViewModel.class);
 
+        initInsets();
         initView();
         initRecyclerView();
-        initData();
+        observeData();
+
     }
 
     private void initView() {
@@ -42,23 +46,23 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        historyAdapter = new HistoryAdapter(new ArrayList<>());
-        recyclerView.setAdapter(historyAdapter);
+        movimentationAdapter = new MovimentationAdapter(new ArrayList<>());
+        recyclerView.setAdapter(movimentationAdapter);
     }
 
-    private void initData() {
-        historyDao = AppDataBase.getInstance(this).historyDao();
-
-        historyDao.getAllHistory().observe(this, historyList -> {
-            historyAdapter.updateList(historyList);
-        });
-    }
 
     public void initInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+    }
+
+    private void observeData(){
+        viewModel.getAllHistory().observe(this, historyList -> {
+            movimentationAdapter.updateList(historyList);
+
         });
     }
 
