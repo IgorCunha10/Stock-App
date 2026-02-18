@@ -31,18 +31,27 @@ public class DetailActivity extends AppCompatActivity {
 
         initInsets();
 
+        initView();
+        initRecyclerView();
+        initData();
+    }
+
+    private void initView() {
         recyclerView = findViewById(R.id.recyclerHistory);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
+    private void initRecyclerView() {
         historyAdapter = new HistoryAdapter(new ArrayList<>());
         recyclerView.setAdapter(historyAdapter);
+    }
 
+    private void initData() {
         historyDao = AppDataBase.getInstance(this).historyDao();
 
         historyDao.getAllHistory().observe(this, historyList -> {
             historyAdapter.updateList(historyList);
         });
-
     }
 
     public void initInsets() {

@@ -21,7 +21,7 @@ public class NewProductActivity extends AppCompatActivity {
     private TextView pageName;
     private Button saveButton;
     private boolean isEdit = false;
-    private int position;
+
     private ProductsRepository repo;
 
 
@@ -43,7 +43,7 @@ public class NewProductActivity extends AppCompatActivity {
         if (intent.hasExtra("product")) {
             isEdit = true;
             actualProduct = (Product) intent.getSerializableExtra("product");
-            position = intent.getIntExtra("position", -1);
+
 
             loadData();
             configEditScreen();
