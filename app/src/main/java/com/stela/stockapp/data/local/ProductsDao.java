@@ -1,4 +1,4 @@
-package com.stela.stockapp.data.javadb;
+package com.stela.stockapp.data.local;
 
 
 import androidx.lifecycle.LiveData;
@@ -8,7 +8,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.stela.stockapp.model.product.Product;
+import com.stela.stockapp.data.model.product.Product;
 
 import java.util.List;
 

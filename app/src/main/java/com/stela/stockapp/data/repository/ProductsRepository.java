@@ -1,13 +1,11 @@
-package com.stela.stockapp.data;
+package com.stela.stockapp.data.repository;
 
-import android.app.Application;
 import android.content.Context;
 
-import com.stela.stockapp.data.javadb.AppDataBase;
-import com.stela.stockapp.data.javadb.HistoryDao;
-import com.stela.stockapp.data.javadb.ProductsDao;
-import com.stela.stockapp.model.history.ProductHistory;
-import com.stela.stockapp.model.product.Product;
+import com.stela.stockapp.data.local.AppDataBase;
+import com.stela.stockapp.data.local.ProductsDao;
+import com.stela.stockapp.data.model.history.ProductHistory;
+import com.stela.stockapp.data.model.product.Product;
 
 import androidx.lifecycle.LiveData;
 
