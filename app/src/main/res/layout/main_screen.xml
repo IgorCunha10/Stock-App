@@ -13,32 +13,31 @@
         android:id="@+id/headerCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         app:cardCornerRadius="0dp"
-        app:cardElevation="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="24dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:letterSpacing="0.02"
-                android:paddingBottom="8dp"
                 android:text="Stock App"
                 android:textColor="@color/textPrimary"
                 android:textSize="32sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
 
             <View
                 android:id="@+id/divider"
@@ -56,39 +55,41 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:padding="8dp"
+        android:padding="12dp"
+        android:paddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerCard"
         tools:listitem="@layout/item_view" />
 
-    <!-- Botão flutuante -->
-
+    <!-- Botão flutuante Info -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="92dp"
         android:clickable="true"
-        app:srcCompat="@android:drawable/ic_dialog_info"
+        app:backgroundTint="@color/buttonColor"
+        app:elevation="6dp"
+        app:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:elevation="6dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="92dp"
-        app:backgroundTint="@color/buttonColor"
-        />
+        app:srcCompat="@android:drawable/ic_dialog_info" />
 
+    <!-- Botão flutuante Add Product -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNewProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="Add product"
         app:backgroundTint="@color/buttonColor"
         app:elevation="6dp"
         app:fabSize="normal"
+        app:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />

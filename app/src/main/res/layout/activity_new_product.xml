@@ -3,41 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/background">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+    <!-- Header Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/headerCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp"
-            android:gravity="center_horizontal"
-            android:background="@color/background"
-            >
+            android:paddingTop="40dp"
+            android:paddingBottom="20dp">
 
-            <!-- Header -->
             <TextView
                 android:id="@+id/pageName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register Product"
-                android:textSize="32sp"
-                android:textColor="@color/textPrimary"
-                android:textStyle="bold"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="8dp"
+                android:layout_gravity="center_horizontal"
                 android:letterSpacing="0.02"
-                />
+                android:text="Register Product"
+                android:textColor="@color/textPrimary"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
 
             <View
                 android:layout_width="60dp"
                 android:layout_height="4dp"
-                android:background="@color/textPrimary"
-                android:layout_marginBottom="32dp"/>
+                android:layout_gravity="center_horizontal"
+                android:background="@color/textPrimary" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerCard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="32dp">
 
             <!-- Product Name Card -->
             <com.google.android.material.card.MaterialCardView
@@ -46,7 +69,8 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="false"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -71,10 +95,10 @@
                         android:hint="Type the product name"
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
-                        android:padding="12dp"/>
+                        android:padding="12dp"
+                        android:paddingStart="0dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
 
             <!-- Product Description Card -->
             <com.google.android.material.card.MaterialCardView
@@ -83,7 +107,8 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="false"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,10 +133,11 @@
                         android:hint="Type the Product Description"
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
-                        android:minHeight="80dp"
+                        android:minHeight="100dp"
                         android:gravity="top|start"
                         android:inputType="textMultiLine|textCapSentences"
-                        android:padding="12dp"/>
+                        android:padding="12dp"
+                        android:paddingStart="0dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -119,10 +145,11 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="false"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -148,19 +175,21 @@
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
                         android:inputType="number"
-                        android:padding="12dp"/>
+                        android:padding="12dp"
+                        android:paddingStart="0dp"/>
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Product Quantity Card -->
+            <!-- Product Price Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="false"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -186,12 +215,11 @@
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
                         android:inputType="number"
-                        android:padding="12dp"/>
+                        android:padding="12dp"
+                        android:paddingStart="0dp"/>
                 </LinearLayout>
 
-
             </com.google.android.material.card.MaterialCardView>
-
 
             <!-- Save Button -->
             <com.google.android.material.button.MaterialButton
@@ -201,16 +229,12 @@
                 android:text="Save"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:textColor="@android:color/white"
                 app:cornerRadius="12dp"
                 app:elevation="4dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                app:backgroundTint="@color/buttonColor"
-                />
+                app:backgroundTint="@color/buttonColor" />
 
         </LinearLayout>
-
-
 
     </ScrollView>
 

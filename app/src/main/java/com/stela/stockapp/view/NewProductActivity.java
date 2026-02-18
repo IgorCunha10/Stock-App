@@ -9,13 +9,10 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.stela.stockapp.R;
 import com.stela.stockapp.data.ProductsRepository;
-import com.stela.stockapp.model.Product;
+import com.stela.stockapp.model.product.Product;
 
 public class NewProductActivity extends AppCompatActivity {
 
@@ -24,7 +21,7 @@ public class NewProductActivity extends AppCompatActivity {
     private TextView pageName;
     private Button saveButton;
     private boolean isEdit = false;
-    private int position;
+
     private ProductsRepository repo;
 
 
@@ -46,7 +43,7 @@ public class NewProductActivity extends AppCompatActivity {
         if (intent.hasExtra("product")) {
             isEdit = true;
             actualProduct = (Product) intent.getSerializableExtra("product");
-            position = intent.getIntExtra("position", -1);
+
 
             loadData();
             configEditScreen();
