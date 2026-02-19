@@ -15,7 +15,6 @@ import java.util.List;
 @Dao
 public interface ProductsDao {
 
-
     @Query("SELECT * FROM products")
     LiveData<List<Product>> getAll();
 

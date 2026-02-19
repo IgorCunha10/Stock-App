@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabNewProduct;
     private FloatingActionButton fabInfo;
     private MainViewModel mainViewModel;
-    private ImageButton editBtn;
-    private ImageButton deleteBtn;
+
 
 
     @Override
@@ -68,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         fabNewProduct = findViewById(R.id.fabNewProduct);
         fabInfo = findViewById(R.id.fabInfo);
-        editBtn = findViewById(R.id.editBtn);
-        deleteBtn = findViewById(R.id.deleteBtn);
         recyclerView = findViewById(R.id.recyclerView);
     }
 

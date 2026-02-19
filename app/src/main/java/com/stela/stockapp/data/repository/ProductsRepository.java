@@ -79,18 +79,6 @@ public class ProductsRepository {
         });
     }
 
-    public void moveStock(Product product, int qty, boolean isIn) {
-        executor.execute(() -> {
-            if (isIn) {
-                product.setProductQuantity(product.getProductQuantity() + qty);
-            } else {
-                product.setProductQuantity(product.getProductQuantity() - qty);
-            }
-            productsDao.update(product);
 
-            ProductHistory history = createHistory(product, isIn ? "IN" : "OUT", qty);
-            historyRepository.insertHistory(history);
-        });
-    }
 }
 

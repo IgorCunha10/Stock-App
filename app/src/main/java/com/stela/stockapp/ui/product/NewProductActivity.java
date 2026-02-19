@@ -18,7 +18,7 @@ import com.stela.stockapp.data.model.product.Product;
 public class NewProductActivity extends AppCompatActivity {
 
     private Product actualProduct;
-    private EditText edtName, edtDescription, edtId, edtQuantity, edtPrice, edtDate;
+    private EditText edtName, edtDescription, edtQuantity, edtPrice;
     private TextView pageName;
     private Button saveButton;
     private boolean isEdit = false;

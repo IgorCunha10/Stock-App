@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.stela.stockapp.data.model.history.ProductHistory;
 import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.repository.ProductsRepository;
 
