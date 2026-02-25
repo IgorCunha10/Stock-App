@@ -1,4 +1,4 @@
-package com.stela.stockapp.model.history;
+package com.stela.stockapp.data.model.history;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

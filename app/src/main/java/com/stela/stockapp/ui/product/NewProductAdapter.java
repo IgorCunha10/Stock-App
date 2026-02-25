@@ -1,4 +1,4 @@
-package com.stela.stockapp.view.adapter;
+package com.stela.stockapp.ui.product;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.stockapp.R;
-import com.stela.stockapp.model.product.Product;
+import com.stela.stockapp.data.model.product.Product;
 
 import java.util.List;
 
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.ProductViewHolder> {
 
     private final Context context;
     private List<Product> products;
     private OnItemActionListener listener;
 
-    public ProductAdapter(Context context, List<Product> products) {
+    public NewProductAdapter(Context context, List<Product> products) {
         this.context = context;
         this.products = products;
     }

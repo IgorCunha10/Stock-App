@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.movimentation.MovimentationActivity"
+    tools:context=".ui.reader.ReaderActivity"
     android:background="@color/background"
     >
 
@@ -19,32 +19,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp"
-
-            >
+            android:paddingTop="40dp"
+            android:paddingBottom="20dp">
 
             <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
+                android:id="@+id/tvrsTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:letterSpacing="0.02"
-                android:paddingBottom="8dp"
-                android:layout_marginTop="10dp"
-                android:text="Movimentations"
+                android:text="Read Screen"
                 android:textColor="@color/textPrimary"
                 android:textSize="32sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="10dp"
+
+                />
 
             <View
                 android:id="@+id/divider"
@@ -54,15 +50,6 @@
                 android:background="@color/textPrimary" />
         </LinearLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerHistory"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background"
-            android:padding="8dp"
-            tools:listitem="@layout/detail_item_view" />
-    </LinearLayout>
-
     </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

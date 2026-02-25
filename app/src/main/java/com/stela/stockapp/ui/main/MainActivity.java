@@ -1,8 +1,7 @@
-package com.stela.stockapp.view;
+package com.stela.stockapp.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -11,14 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
-import com.stela.stockapp.data.ProductsRepository;
-import com.stela.stockapp.model.product.Product;
-import com.stela.stockapp.view.adapter.ProductAdapter;
+import com.stela.stockapp.data.model.product.Product;
+import com.stela.stockapp.ui.movimentation.MovimentationActivity;
+import com.stela.stockapp.ui.product.NewProductActivity;
+import com.stela.stockapp.ui.product.NewProductAdapter;
+import com.stela.stockapp.ui.reader.ReaderActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +30,12 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> addProductLauncher;
     private RecyclerView recyclerView;
     private List<Product> productList;
-    private ProductAdapter adapter;
+    private NewProductAdapter adapter;
     private FloatingActionButton fabNewProduct;
     private FloatingActionButton fabInfo;
-    private ProductsRepository repo;
-    private ImageButton editBtn;
-    private ImageButton deleteBtn;
+    private FloatingActionButton fabScanner;
+    private MainViewModel mainViewModel;
+
 
 
     @Override
@@ -42,13 +44,15 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.main_screen);
 
+        mainViewModel = new ViewModelProvider(this)
+                .get(MainViewModel.class);
+
         initInsets();
         initView();
         initRecycler();
         initListeners();
         initData();
         initActivityResults();
-
 
     }
 
@@ -64,24 +68,24 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         fabNewProduct = findViewById(R.id.fabNewProduct);
         fabInfo = findViewById(R.id.fabInfo);
-        editBtn = findViewById(R.id.editBtn);
-        deleteBtn = findViewById(R.id.deleteBtn);
         recyclerView = findViewById(R.id.recyclerView);
+        fabScanner = findViewById(R.id.fabScanner);
     }
 
     private void initRecycler() {
         productList = new ArrayList<>();
-        adapter = new ProductAdapter(this, productList);
+        adapter = new NewProductAdapter(this, productList);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
     private void initData() {
-        repo = ProductsRepository.getInstance(this);
-        repo.getAll().observe(this, products -> {
-            adapter.setProductList(products);
-        });
+
+      mainViewModel.getAllProducts().observe(this, products -> {
+          adapter.setProductList(products);
+      });
+
     }
 
 
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                             Product product =
                                     (Product) data.getSerializableExtra("product");
 
-                            repo.addProduct(product);
+                            mainViewModel.addProduct(product);
                         }
                     }
                 });
@@ -109,12 +113,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fabInfo.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            Intent intent = new Intent(MainActivity.this, MovimentationActivity.class);
             startActivity(intent);
         });
 
+        fabScanner.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ReaderActivity.class);
+            startActivity(intent);
+        });
 
-        adapter.setOnItemActionListener(new ProductAdapter.OnItemActionListener() {
+        adapter.setOnItemActionListener(new NewProductAdapter.OnItemActionListener() {
 
             @Override
             public void onEditClick(Product product) {
@@ -125,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDeleteClick(Product product) {
-                repo.deleteProduct(product);
+                mainViewModel.deleteProduct(product);
             }
         });
     }

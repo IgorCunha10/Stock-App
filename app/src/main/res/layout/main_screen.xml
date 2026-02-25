@@ -37,7 +37,9 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="10dp"
+                />
 
             <View
                 android:id="@+id/divider"
@@ -93,5 +95,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabScanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="170dp"
+        android:contentDescription="Scan"
+        app:backgroundTint="@color/buttonColor"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_scan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

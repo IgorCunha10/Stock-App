@@ -1,6 +1,5 @@
-package com.stela.stockapp.view.adapter;
+package com.stela.stockapp.ui.movimentation;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.stockapp.R;
-import com.stela.stockapp.model.history.ProductHistory;
+import com.stela.stockapp.data.model.history.ProductHistory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
+public class MovimentationAdapter extends RecyclerView.Adapter<MovimentationAdapter.HistoryViewHolder> {
 
     private List<ProductHistory> historyList;
 
-    public HistoryAdapter(List<ProductHistory> historyList) {
+    public MovimentationAdapter(List<ProductHistory> historyList) {
         this.historyList = historyList;
     }
 
