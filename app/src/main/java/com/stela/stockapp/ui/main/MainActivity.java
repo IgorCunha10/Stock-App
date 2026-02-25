@@ -2,7 +2,6 @@ package com.stela.stockapp.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
@@ -21,6 +20,7 @@ import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.ui.movimentation.MovimentationActivity;
 import com.stela.stockapp.ui.product.NewProductActivity;
 import com.stela.stockapp.ui.product.NewProductAdapter;
+import com.stela.stockapp.ui.reader.ReaderActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private NewProductAdapter adapter;
     private FloatingActionButton fabNewProduct;
     private FloatingActionButton fabInfo;
+    private FloatingActionButton fabScanner;
     private MainViewModel mainViewModel;
 
 
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         fabNewProduct = findViewById(R.id.fabNewProduct);
         fabInfo = findViewById(R.id.fabInfo);
         recyclerView = findViewById(R.id.recyclerView);
+        fabScanner = findViewById(R.id.fabScanner);
     }
 
     private void initRecycler() {
@@ -115,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        fabScanner.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ReaderActivity.class);
+            startActivity(intent);
+        });
 
         adapter.setOnItemActionListener(new NewProductAdapter.OnItemActionListener() {
 

@@ -33,7 +33,7 @@ public class MovimentationActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this)
                 .get(MovimentationViewModel.class);
 
-        initInsets();
+        //initInsets();
         initView();
         initRecyclerView();
         observeData();
@@ -51,13 +51,7 @@ public class MovimentationActivity extends AppCompatActivity {
     }
 
 
-    public void initInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-    }
+
 
     private void observeData(){
         viewModel.getAllHistory().observe(this, historyList -> {
