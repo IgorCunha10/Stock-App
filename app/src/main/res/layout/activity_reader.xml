@@ -50,6 +50,68 @@
                 android:background="@color/textPrimary" />
         </LinearLayout>
 
+
+
     </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/headerCd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        >
+
+    <Button
+        android:id="@+id/btnConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="190dp"
+        android:backgroundTint="@color/buttonColor"
+        android:textColor="@android:color/white"
+
+        />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="190dp"
+            android:backgroundTint="@color/buttonColor"
+            android:textColor="@android:color/white"
+            android:layout_margin="15dp"
+
+            />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabScanTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:backgroundTint="@color/buttonColor"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icon_signal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="409dp"
+        android:layout_height="410dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="192dp"
+        tools:listitem="@layout/reader_view"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
