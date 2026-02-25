@@ -51,8 +51,6 @@ public class MovimentationActivity extends AppCompatActivity {
     }
 
 
-
-
     private void observeData(){
         viewModel.getAllHistory().observe(this, historyList -> {
             movimentationAdapter.updateList(historyList);

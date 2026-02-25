@@ -45,7 +45,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation ("androidx.room:room-runtime:2.8.4")
     annotationProcessor ("androidx.room:room-compiler:2.8.4")
-    implementation(mapOf("name" to "grmt288-1.0.0.7", "ext" to "aar"))
+    implementation(files("libs/grmt288-1.0.0.7.aar"))
 
 
 }
