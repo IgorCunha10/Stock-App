@@ -32,13 +32,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
                 android:letterSpacing="0.02"
                 android:text="Read Screen"
                 android:textColor="@color/textPrimary"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="10dp"
 
                 />
 
@@ -51,45 +51,59 @@
         </LinearLayout>
 
 
-
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/headerCd"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/fabScanTag"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerCd">
 
-        >
-
-    <Button
-        android:id="@+id/btnConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="190dp"
-        android:backgroundTint="@color/buttonColor"
-        android:textColor="@android:color/white"
-
-        />
-
-        <Button
-            android:id="@+id/btnClear"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clear"
-            tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="190dp"
-            android:backgroundTint="@color/buttonColor"
-            android:textColor="@android:color/white"
-            android:layout_margin="15dp"
+            android:gravity="center"
+            android:orientation="horizontal"
 
-            />
+            >
 
+            <Button
+                android:id="@+id/btnConnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/buttonColor"
+                android:text="Connect"
+                android:textColor="@android:color/white"
+                tools:layout_editor_absoluteX="62dp"
+                tools:layout_editor_absoluteY="190dp"
+
+                />
+
+            <Button
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:backgroundTint="@color/buttonColor"
+                android:text="Clear"
+                android:textColor="@android:color/white"
+                tools:layout_editor_absoluteX="62dp"
+                tools:layout_editor_absoluteY="190dp"
+
+                />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTagList"
+            android:layout_width="409dp"
+            android:layout_height="410dp"
+            tools:listitem="@layout/reader_view" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -104,14 +118,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/icon_signal" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="409dp"
-        android:layout_height="410dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="192dp"
-        tools:listitem="@layout/reader_view"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background"
     >
 
 
@@ -24,14 +23,13 @@
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
-            android:background="@android:color/white"
-
             >
 
             <TextView
+                android:id="@+id/tagId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tag item"
+                android:text="Tag Id"
                 android:textSize="20dp"
                 android:textColor="@color/textPrimary"
                 android:layout_gravity="center"
@@ -40,9 +38,10 @@
                 />
 
             <TextView
+                android:id="@+id/signalForce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tag Number"
+                android:text="Signal Force"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textSize="18dp"

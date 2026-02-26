@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.stela.stockapp"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
 
@@ -46,6 +46,7 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.8.4")
     annotationProcessor ("androidx.room:room-compiler:2.8.4")
     implementation(files("libs/grmt288-1.0.0.7.aar"))
+    implementation("org.greenrobot:eventbus:3.3.1")
 
 
 }
