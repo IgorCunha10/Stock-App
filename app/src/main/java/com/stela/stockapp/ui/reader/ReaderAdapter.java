@@ -80,17 +80,19 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
 
     class ReaderViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tagId, signalForce;
+        TextView tagId, signalForce, tagNumber;
 
         public ReaderViewHolder(@NonNull View itemView) {
             super(itemView);
             tagId = itemView.findViewById(R.id.tagId);
             signalForce = itemView.findViewById(R.id.signalForce);
+            tagNumber = itemView.findViewById(R.id.tagNumber);
         }
 
         public void bind(Tag tag) {
             tagId.setText(tag.getEpc());
             signalForce.setText(String.valueOf(tag.getRssi()));
+            tagNumber.setText(String.valueOf(tag.getReadCount()));
         }
     }
 }
