@@ -1,6 +1,8 @@
 package com.stela.stockapp.ui.reader;
 
 import android.annotation.SuppressLint;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -33,6 +35,9 @@ public class ReaderActivity extends AppCompatActivity {
     private final Map<String, Long> lastReadMap = new HashMap<>();
     private static final long READ_COOLDOWN_MS = 300;
 
+
+    private ToneGenerator toneGenerator;
+
     private boolean canProcess(String epc) {
         long now = System.currentTimeMillis();
         Long last = lastReadMap.get(epc);
@@ -55,6 +60,8 @@ public class ReaderActivity extends AppCompatActivity {
         initView();
         initRecyclerView();
         initListeners();
+
+        toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
 
 
     }
@@ -79,6 +86,7 @@ public class ReaderActivity extends AppCompatActivity {
             switch (event.getAction()) {
 
                 case MotionEvent.ACTION_DOWN:
+                    playStartBeep();
                     try {
                         otgReader.ScanTags();
                     } catch (ReaderException e) {
@@ -88,6 +96,7 @@ public class ReaderActivity extends AppCompatActivity {
 
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
+                    playStopBeep();
                     try {
                         otgReader.StopScan();
                     } catch (ReaderException e) {
@@ -134,5 +143,12 @@ public class ReaderActivity extends AppCompatActivity {
         rvTagList.setAdapter(readerAdapter);
     }
 
+private void playStartBeep() {
+       toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 120);
+}
+
+private void playStopBeep() {
+        toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 120);
+}
 
 }
