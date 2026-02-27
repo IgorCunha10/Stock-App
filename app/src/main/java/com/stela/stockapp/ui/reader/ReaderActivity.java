@@ -40,7 +40,6 @@ public class ReaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reader);
 
         initView();
-        initRecyclerView();
 
         ReaderRepository repository = new ReaderRepository(this);
         viewModel = new ViewModelProvider(
@@ -48,10 +47,15 @@ public class ReaderActivity extends AppCompatActivity {
                 new ReaderViewModelFactory(repository)
         ).get(ReaderViewModel.class);
 
+        initRecyclerView();
         initObservers();
         initListeners();
 
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+
+        viewModel.getError().observe(this, msg -> {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void initObservers() {
@@ -97,9 +101,17 @@ public class ReaderActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        readerAdapter = new ReaderAdapter(new ArrayList<>());
+        readerAdapter = new ReaderAdapter();
+
         rvTagList.setLayoutManager(new LinearLayoutManager(this));
         rvTagList.setAdapter(readerAdapter);
+        viewModel.getTags().observe(this, tags -> {
+                    if (tags != null) {
+                        readerAdapter.submitList(tags);
+                    }
+                }
+        );
+
     }
 
     private void playStartBeep() {

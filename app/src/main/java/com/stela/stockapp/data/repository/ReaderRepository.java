@@ -27,7 +27,7 @@ public class ReaderRepository {
         try {
             otgReader.ScanTags();
         } catch (ReaderException e) {
-            Log.e("RFID", "Erro ao iniciar scan", e);
+            throw new RuntimeException(e); // ou logar
         }
     }
 
@@ -35,7 +35,7 @@ public class ReaderRepository {
         try {
             otgReader.StopScan();
         } catch (ReaderException e) {
-            Log.e("RFID", "Erro ao parar scan", e);
+            throw new RuntimeException(e);
         }
     }
 

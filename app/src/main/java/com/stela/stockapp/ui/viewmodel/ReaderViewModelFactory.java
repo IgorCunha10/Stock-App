@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.stela.stockapp.data.repository.ReaderRepository;
 
+
 public class ReaderViewModelFactory implements ViewModelProvider.Factory {
 
     private final ReaderRepository repository;
@@ -16,7 +17,15 @@ public class ReaderViewModelFactory implements ViewModelProvider.Factory {
 
     @NonNull
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new ReaderViewModel(repository);
+
+        if (modelClass.isAssignableFrom(ReaderViewModel.class)) {
+            return (T) new ReaderViewModel(repository);
+        }
+
+        throw new IllegalArgumentException(
+                "Unknown ViewModel class: " + modelClass.getName()
+        );
     }
 }
