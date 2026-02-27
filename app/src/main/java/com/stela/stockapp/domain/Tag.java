@@ -39,10 +39,10 @@ public class Tag extends EpcBean {
     /**
      * Construtor para criação de uma Tag a partir de dados.
      *
-     * @param epc Código EPC da Tag RFID
+     * @param epc          Código EPC da Tag RFID
      * @param serialNumber Número de série da Tag
-     * @param readCount Quantidade de leituras
-     * @param rssi Intensidade do sinal da leitura
+     * @param readCount    Quantidade de leituras
+     * @param rssi         Intensidade do sinal da leitura
      */
     public Tag(String epc, String serialNumber, int readCount, int rssi) {
         this.strepc = epc;
@@ -143,7 +143,7 @@ public class Tag extends EpcBean {
                 '}';
     }
 
-    public void incrementReadCount(){
+    public void incrementReadCount() {
         this.strCount++;
     }
 }

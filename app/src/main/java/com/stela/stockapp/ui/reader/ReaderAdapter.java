@@ -16,6 +16,7 @@ import com.stela.stockapp.domain.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderViewHolder> {
 
     private final List<Tag> tagList;
@@ -43,7 +44,7 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         return tagList.size();
     }
 
-        public void addTag(@NonNull Tag newTag) {
+    public void addTag(@NonNull Tag newTag) {
         int index = findIndexByEpc(newTag.getEpc());
 
         if (index >= 0) {

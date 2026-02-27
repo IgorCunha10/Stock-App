@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +19,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.grotg.hpp.otglibrary.exception.ReaderException;
 import com.grotg.hpp.otglibrary.otgreader.OtgReader;
 import com.stela.stockapp.R;
+import com.stela.stockapp.data.repository.ReaderRepository;
 import com.stela.stockapp.domain.Tag;
+import com.stela.stockapp.ui.viewmodel.ReaderViewModel;
+import com.stela.stockapp.ui.viewmodel.ReaderViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,29 +30,13 @@ import java.util.Map;
 
 public class ReaderActivity extends AppCompatActivity {
 
-    private OtgReader otgReader;
     private Button btnConnect, btnClear;
     private FloatingActionButton fabScanTag;
     private RecyclerView rvTagList;
     private ReaderAdapter readerAdapter;
-    private boolean isConnected = false;
-    private final Map<String, Long> lastReadMap = new HashMap<>();
-    private static final long READ_COOLDOWN_MS = 300;
 
-
+    private ReaderViewModel viewModel;
     private ToneGenerator toneGenerator;
-
-    private boolean canProcess(String epc) {
-        long now = System.currentTimeMillis();
-        Long last = lastReadMap.get(epc);
-
-        if(last == null || now - last > READ_COOLDOWN_MS) {
-            lastReadMap.put(epc, now);
-            return true;
-        }
-        return false;
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,62 +44,54 @@ public class ReaderActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_reader);
 
-        initReader();
         initView();
         initRecyclerView();
+
+        ReaderRepository repository = new ReaderRepository(this);
+        viewModel = new ViewModelProvider(
+                this,
+                new ReaderViewModelFactory(repository)
+        ).get(ReaderViewModel.class);
+
+        initObservers();
         initListeners();
 
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+    }
 
+    private void initObservers() {
+        viewModel.getTags().observe(this, tags -> readerAdapter.submitList(tags));
 
+        viewModel.isConnected().observe(this, connected -> {
+            btnConnect.setText(connected ? "Conectado" : "Conectar");
+            Toast.makeText(this,
+                    connected ? "Leitora Conectada" : "Falha ao conectar",
+                    Toast.LENGTH_SHORT).show();
+        });
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void initListeners() {
-        btnConnect.setOnClickListener(v -> {
-            otgReader.connect((success, message) -> {
-                if (success) {
-                    Toast.makeText(this, "Leitora Conectada", Toast.LENGTH_SHORT).show();
-                    isConnected = true;
-                    btnConnect.setText("Conectado");
-                } else {
-                    Toast.makeText(this, "Falha em conectar leitora", Toast.LENGTH_SHORT).show();
-                    isConnected = false;
-                    btnConnect.setText("Conectar");
-                }
-            });
-        });
+        btnConnect.setOnClickListener(v -> viewModel.connect());
 
         fabScanTag.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
-
                 case MotionEvent.ACTION_DOWN:
                     playStartBeep();
-                    try {
-                        otgReader.ScanTags();
-                    } catch (ReaderException e) {
-                        Log.e("RFID", "Erro ao iniciar scan", e);
-                    }
+                    viewModel.startScan();
                     return true;
 
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
                     playStopBeep();
-                    try {
-                        otgReader.StopScan();
-                    } catch (ReaderException e) {
-                        Log.e("RFID", "Erro ao parar scan", e);
-                    }
-
+                    viewModel.stopScan();
                     v.performClick();
                     return true;
             }
             return false;
         });
 
-        btnClear.setOnClickListener(v -> {
-            readerAdapter.clearList();
-        });
+        btnClear.setOnClickListener(v -> viewModel.clearTags());
     }
 
     private void initView() {
@@ -119,36 +99,19 @@ public class ReaderActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClear);
         fabScanTag = findViewById(R.id.fabScanTag);
         rvTagList = findViewById(R.id.rvTagList);
-
-        rvTagList.setLayoutManager(new LinearLayoutManager(this));
     }
-
-    private void initReader() {
-        otgReader = new OtgReader(this);
-
-        otgReader.setreadTagDataCallback(epcBean -> {
-            Tag tag = new Tag(epcBean);
-
-            if (canProcess(tag.getEpc())) {
-                tag.setReadCount(1);
-                runOnUiThread(() -> readerAdapter.addTag(tag));
-            }
-        });
-    }
-
-
 
     private void initRecyclerView() {
         readerAdapter = new ReaderAdapter(new ArrayList<>());
+        rvTagList.setLayoutManager(new LinearLayoutManager(this));
         rvTagList.setAdapter(readerAdapter);
     }
 
-private void playStartBeep() {
-       toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 120);
-}
+    private void playStartBeep() {
+        toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 120);
+    }
 
-private void playStopBeep() {
+    private void playStopBeep() {
         toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 120);
-}
-
+    }
 }
