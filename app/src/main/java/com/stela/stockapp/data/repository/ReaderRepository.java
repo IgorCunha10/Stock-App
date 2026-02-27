@@ -1,7 +1,6 @@
 package com.stela.stockapp.data.repository;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 
 import com.grotg.hpp.otglibrary.exception.ReaderException;

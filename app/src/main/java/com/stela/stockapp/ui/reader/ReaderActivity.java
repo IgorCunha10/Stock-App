@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,17 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.grotg.hpp.otglibrary.exception.ReaderException;
-import com.grotg.hpp.otglibrary.otgreader.OtgReader;
 import com.stela.stockapp.R;
 import com.stela.stockapp.data.repository.ReaderRepository;
-import com.stela.stockapp.domain.Tag;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModel;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModelFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class ReaderActivity extends AppCompatActivity {
 
@@ -65,7 +60,7 @@ public class ReaderActivity extends AppCompatActivity {
         viewModel.isConnected().observe(this, connected -> {
             btnConnect.setText(connected ? "Conectado" : "Conectar");
             Toast.makeText(this,
-                    connected ? "Leitora Conectada" : "Falha ao conectar",
+                    connected ? "Leitora Conectada" : "Conecte a Leitora",
                     Toast.LENGTH_SHORT).show();
         });
     }

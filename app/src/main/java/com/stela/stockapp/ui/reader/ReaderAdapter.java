@@ -1,16 +1,12 @@
 package com.stela.stockapp.ui.reader;
 
-import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
 import com.stela.stockapp.domain.Tag;
 
@@ -44,32 +40,6 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         return tagList.size();
     }
 
-    public void addTag(@NonNull Tag newTag) {
-        int index = findIndexByEpc(newTag.getEpc());
-
-        if (index >= 0) {
-            Tag existingTag = tagList.get(index);
-
-            existingTag.setRssi(newTag.getRssi());
-            existingTag.incrementReadCount();
-
-            notifyItemChanged(index);
-
-        } else {
-            newTag.setReadCount(1);
-            tagList.add(newTag);
-            notifyItemInserted(tagList.size() - 1);
-        }
-    }
-
-    private int findIndexByEpc(String epc) {
-        for (int i = 0; i < tagList.size(); i++) {
-            if (tagList.get(i).getEpc().equals(epc)) {
-                return i;
-            }
-        }
-        return -1;
-    }
 
     public void submitList(List<Tag> newList) {
         tagList.clear();
@@ -79,11 +49,6 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         notifyDataSetChanged();
     }
 
-    public void clearList() {
-        tagList.clear();
-        notifyDataSetChanged();
-
-    }
 
     class ReaderViewHolder extends RecyclerView.ViewHolder {
 
