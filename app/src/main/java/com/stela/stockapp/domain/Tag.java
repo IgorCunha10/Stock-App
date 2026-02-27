@@ -100,6 +100,7 @@ public class Tag extends EpcBean {
         this.strCount = readCount;
     }
 
+
     /**
      * Retorna o RSSI (Received Signal Strength Indicator).
      * Quanto maior o valor, mais forte o sinal da leitura.
@@ -140,5 +141,9 @@ public class Tag extends EpcBean {
                 ", readCount=" + strCount +
                 ", rssi=" + intRssi +
                 '}';
+    }
+
+    public void incrementReadCount(){
+        this.strCount++;
     }
 }

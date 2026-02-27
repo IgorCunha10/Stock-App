@@ -19,6 +19,8 @@ import com.stela.stockapp.R;
 import com.stela.stockapp.domain.Tag;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReaderActivity extends AppCompatActivity {
 
@@ -28,6 +30,20 @@ public class ReaderActivity extends AppCompatActivity {
     private RecyclerView rvTagList;
     private ReaderAdapter readerAdapter;
     private boolean isConnected = false;
+    private final Map<String, Long> lastReadMap = new HashMap<>();
+    private static final long READ_COOLDOWN_MS = 300;
+
+    private boolean canProcess(String epc) {
+        long now = System.currentTimeMillis();
+        Long last = lastReadMap.get(epc);
+
+        if(last == null || now - last > READ_COOLDOWN_MS) {
+            lastReadMap.put(epc, now);
+            return true;
+        }
+        return false;
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +55,8 @@ public class ReaderActivity extends AppCompatActivity {
         initView();
         initRecyclerView();
         initListeners();
+
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -99,11 +117,17 @@ public class ReaderActivity extends AppCompatActivity {
     private void initReader() {
         otgReader = new OtgReader(this);
 
-        otgReader.setreadTagDataCallback(tag ->
-                readerAdapter.addTag(new Tag(tag))
-        );
+        otgReader.setreadTagDataCallback(epcBean -> {
+            Tag tag = new Tag(epcBean);
 
+            if (canProcess(tag.getEpc())) {
+                tag.setReadCount(1);
+                runOnUiThread(() -> readerAdapter.addTag(tag));
+            }
+        });
     }
+
+
 
     private void initRecyclerView() {
         readerAdapter = new ReaderAdapter(new ArrayList<>());

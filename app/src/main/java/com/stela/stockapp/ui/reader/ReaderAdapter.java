@@ -47,9 +47,15 @@ public class ReaderAdapter extends RecyclerView.Adapter<ReaderAdapter.ReaderView
         int index = findIndexByEpc(newTag.getEpc());
 
         if (index >= 0) {
-            tagList.set(index, newTag);
+            Tag existingTag = tagList.get(index);
+
+            existingTag.setRssi(newTag.getRssi());
+            existingTag.incrementReadCount();
+
             notifyItemChanged(index);
+
         } else {
+            newTag.setReadCount(1);
             tagList.add(newTag);
             notifyItemInserted(tagList.size() - 1);
         }
