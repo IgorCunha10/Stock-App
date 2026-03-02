@@ -36,7 +36,6 @@ public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.Pr
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = products.get(position);
@@ -73,14 +72,14 @@ public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.Pr
         }
 
         public void bind(Product product) {
-            editBtn.setOnClickListener(view ->{
-                if(listener != null) {
+            editBtn.setOnClickListener(view -> {
+                if (listener != null) {
                     listener.onEditClick(product);
                 }
             });
 
-            deleteBtn.setOnClickListener(view ->{
-                if(listener != null) {
+            deleteBtn.setOnClickListener(view -> {
+                if (listener != null) {
                     listener.onDeleteClick(product);
                 }
             });
@@ -95,6 +94,7 @@ public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.Pr
 
     public interface OnItemActionListener {
         void onEditClick(Product product);
+
         void onDeleteClick(Product product);
 
     }
