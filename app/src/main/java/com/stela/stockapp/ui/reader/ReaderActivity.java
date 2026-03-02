@@ -1,6 +1,7 @@
 package com.stela.stockapp.ui.reader;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
+import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.repository.ReaderRepository;
+import com.stela.stockapp.domain.Tag;
+import com.stela.stockapp.ui.main.MainViewModel;
+import com.stela.stockapp.ui.product.NewProductActivity;
+import com.stela.stockapp.ui.product.NewProductAdapter;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModel;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModelFactory;
 
@@ -30,6 +39,9 @@ public class ReaderActivity extends AppCompatActivity {
     private RecyclerView rvTagList;
     private ReaderAdapter readerAdapter;
 
+    private MainViewModel mainViewModel;
+
+    private ActivityResultLauncher<Intent> addProductLauncher;
     private ReaderViewModel viewModel;
     private ToneGenerator toneGenerator;
 
@@ -47,6 +59,10 @@ public class ReaderActivity extends AppCompatActivity {
                 new ReaderViewModelFactory(repository)
         ).get(ReaderViewModel.class);
 
+        mainViewModel = new ViewModelProvider(this)
+                .get(MainViewModel.class);
+
+        initActivityResults();
         initRecyclerView();
         initObservers();
         initListeners();
@@ -69,6 +85,23 @@ public class ReaderActivity extends AppCompatActivity {
         });
     }
 
+    private void initActivityResults() {
+        addProductLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if(data != null && data.hasExtra("product")) {
+                            Product product =
+                                    (Product) data.getSerializableExtra("product");
+
+                            mainViewModel.addProduct(product);
+                        }
+                    }
+                }
+        );
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void initListeners() {
         btnConnect.setOnClickListener(v -> viewModel.connect());
@@ -86,11 +119,13 @@ public class ReaderActivity extends AppCompatActivity {
                     viewModel.stopScan();
                     v.performClick();
                     return true;
+
             }
             return false;
         });
 
         btnClear.setOnClickListener(v -> viewModel.clearTags());
+
     }
 
     private void initView() {
@@ -98,20 +133,30 @@ public class ReaderActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClear);
         fabScanTag = findViewById(R.id.fabScanTag);
         rvTagList = findViewById(R.id.rvTagList);
+
     }
 
     private void initRecyclerView() {
         readerAdapter = new ReaderAdapter();
 
+        readerAdapter.setOnTagActionListener(new ReaderAdapter.OnTagActionListener() {
+            @Override
+            public void onAddProductClick(Tag tag) {
+                Intent intent = new Intent(ReaderActivity.this, NewProductActivity.class);
+                intent.putExtra("epc", tag.getEpc()); // se quiser já passar a tag lida
+                addProductLauncher.launch(intent);
+            }
+
+            @Override
+            public void onInfoClick(Tag tag) {
+                Toast.makeText(ReaderActivity.this,
+                        "Tag: " + tag.getEpc() + "\nRSSI: " + tag.getRssi(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
         rvTagList.setLayoutManager(new LinearLayoutManager(this));
         rvTagList.setAdapter(readerAdapter);
-        viewModel.getTags().observe(this, tags -> {
-                    if (tags != null) {
-                        readerAdapter.submitList(tags);
-                    }
-                }
-        );
-
     }
 
     private void playStartBeep() {

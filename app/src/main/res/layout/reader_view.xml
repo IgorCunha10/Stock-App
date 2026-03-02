@@ -56,6 +56,31 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabNewTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:srcCompat="@android:drawable/ic_menu_add"
+                app:layout_constraintTop_toBottomOf="@+id/tagNumber"
+                app:layout_constraintEnd_toEndOf="@id/tagNumber"
+                android:layout_margin="6dp"
+                app:fabSize="mini"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabTagInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:srcCompat="@android:drawable/ic_dialog_info"
+                app:layout_constraintTop_toBottomOf="@+id/tagNumber"
+                app:layout_constraintEnd_toEndOf="@+id/tagNumber"
+                android:layout_marginEnd="50dp"
+                android:layout_marginTop="6dp"
+                app:fabSize="mini"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

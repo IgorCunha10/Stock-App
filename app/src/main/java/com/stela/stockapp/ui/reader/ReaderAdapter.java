@@ -1,21 +1,31 @@
 package com.stela.stockapp.ui.reader;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
 import com.stela.stockapp.domain.Tag;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ReaderAdapter extends ListAdapter<Tag, ReaderAdapter.ReaderViewHolder> {
+
+    public interface OnTagActionListener {
+        void onAddProductClick(Tag tag);
+        void onInfoClick(Tag tag);
+    }
+
+    private OnTagActionListener listener;
+
+    public void setOnTagActionListener(OnTagActionListener listener) {
+        this.listener = listener;
+    }
 
     public ReaderAdapter() {
         super(DIFF_CALLBACK);
@@ -46,25 +56,36 @@ public class ReaderAdapter extends ListAdapter<Tag, ReaderAdapter.ReaderViewHold
     @Override
     public void onBindViewHolder(@NonNull ReaderViewHolder holder, int position) {
         Tag tag = getItem(position);
-        holder.bind(tag);
+        holder.bind(tag, listener);
     }
 
     static class ReaderViewHolder extends RecyclerView.ViewHolder {
 
         TextView tagId, signalForce, tagNumber;
+        FloatingActionButton fabNewTag, fabTagInfo;
 
         public ReaderViewHolder(@NonNull View itemView) {
             super(itemView);
             tagId = itemView.findViewById(R.id.tagId);
             signalForce = itemView.findViewById(R.id.signalForce);
             tagNumber = itemView.findViewById(R.id.tagNumber);
+
+            fabNewTag = itemView.findViewById(R.id.fabNewTag);
+            fabTagInfo = itemView.findViewById(R.id.fabTagInfo);
         }
 
-        void bind(Tag tag) {
-            android.util.Log.d("RFID_UI", "Bind EPC=" + tag.getEpc() + " Count=" + tag.getReadCount());
+        void bind(Tag tag, OnTagActionListener listener) {
             tagId.setText(tag.getEpc());
             signalForce.setText(String.valueOf(tag.getRssi()));
             tagNumber.setText(String.valueOf(tag.getReadCount()));
+
+            fabNewTag.setOnClickListener(v -> {
+                if (listener != null) listener.onAddProductClick(tag);
+            });
+
+            fabTagInfo.setOnClickListener(v -> {
+                if (listener != null) listener.onInfoClick(tag);
+            });
         }
     }
 }
