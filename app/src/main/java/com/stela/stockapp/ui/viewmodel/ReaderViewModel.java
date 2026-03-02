@@ -32,8 +32,7 @@ public class ReaderViewModel extends ViewModel {
             Tag tag = new Tag(epcBean);
 
             if (canProcess(tag.getEpc())) {
-                tag.setReadCount(1);
-                addTag(tag);
+                addOrUpdateTag(tag);
             }
         });
     }
@@ -87,16 +86,44 @@ public class ReaderViewModel extends ViewModel {
         return false;
     }
 
-    private void addTag(Tag tag) {
+    private void addOrUpdateTag(Tag newTag) {
         List<Tag> current = tagsLiveData.getValue();
 
-        if (current == null) {
-            current = new ArrayList<>();
-        } else {
-            current = new ArrayList<>(current);
+        if (current == null) current = new ArrayList<>();
+        else current = new ArrayList<>(current);
+
+        boolean found = false;
+
+        for (int i = 0; i < current.size(); i++) {
+            Tag old = current.get(i);
+
+            if (old.getEpc().equals(newTag.getEpc())) {
+
+                Tag updated = new Tag(
+                        old.getEpc(),
+                        old.getSerialNumber(),
+                        old.getReadCount() + 1,
+                        newTag.getRssi()
+                );
+
+                current.set(i, updated);
+                found = true;
+                break;
+            }
         }
 
-        current.add(tag);
+        if (!found) {
+            Tag first = new Tag(
+                    newTag.getEpc(),
+                    newTag.getSerialNumber(),
+                    1,
+                    newTag.getRssi()
+            );
+            current.add(first);
+        }
+
         tagsLiveData.postValue(current);
     }
+
+
 }

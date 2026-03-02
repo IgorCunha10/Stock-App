@@ -61,6 +61,7 @@ public class ReaderAdapter extends ListAdapter<Tag, ReaderAdapter.ReaderViewHold
         }
 
         void bind(Tag tag) {
+            android.util.Log.d("RFID_UI", "Bind EPC=" + tag.getEpc() + " Count=" + tag.getReadCount());
             tagId.setText(tag.getEpc());
             signalForce.setText(String.valueOf(tag.getRssi()));
             tagNumber.setText(String.valueOf(tag.getReadCount()));
