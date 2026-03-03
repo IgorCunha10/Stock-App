@@ -65,7 +65,6 @@
         app:layout_constraintTop_toBottomOf="@id/headerCard"
         tools:listitem="@layout/item_view" />
 
-    <!-- Botão flutuante Info -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabInfo"
         android:layout_width="wrap_content"

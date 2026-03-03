@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="end"
+            >
+
+            <TextView
+                android:id="@+id/tagName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tag Name"
+                android:textColor="@color/textPrimary"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:paddingBottom="16dp"
+
+                />
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="3dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:alpha="0.3"
+                android:background="@color/textPrimary"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/background"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                >
+
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Tag ID"
+                  android:textColor="@color/textPrimary"
+                  android:textSize="12sp"
+                  android:alpha="0.6"
+                  android:textStyle="bold"
+                  android:paddingBottom="4dp"
+
+                  />
+
+                <TextView
+                    android:id="@+id/tagId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tag ID"
+                    android:textSize="16sp"
+                    android:textColor="@color/textPrimary"
+
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/background"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RFID Code"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp"
+                android:alpha="0.6"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+
+                />
+
+             <TextView
+                 android:id="@+id/rfidCode"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:textColor="@color/textPrimary"
+                 android:text="RFID Code"
+                 android:textSize="16sp"
+
+                 />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/background"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Id"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:alpha="0.6"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"
+                    />
+
+                <TextView
+                    android:id="@+id/productId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Id"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16dp"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/background"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lote"
+                    android:textSize="12sp"
+                    android:textColor="@color/textPrimary"
+                    android:alpha="0.6"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"
+
+                    />
+
+                <TextView
+                    android:id="@+id/loteId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/textPrimary"
+                    android:text="Lote"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@color/background"
+                android:layout_marginBottom="12dp"
+            >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Created at"
+                    android:textSize="12sp"
+                    android:textColor="@color/textPrimary"
+                    android:alpha="0.6"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/crDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="dd/mm/yyyy"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="12dp"
+                >
+
+                <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textColor="@color/textPrimary"
+                android:textSize="12sp"
+                android:alpha="0.6"
+                android:layout_marginBottom="4dp"
+
+                />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:textSize="16sp"
+                    android:textColor="@color/textPrimary"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

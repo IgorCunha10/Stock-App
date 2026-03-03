@@ -66,6 +66,8 @@
                 app:layout_constraintEnd_toEndOf="@id/tagNumber"
                 android:layout_margin="6dp"
                 app:fabSize="mini"
+                android:backgroundTint="@color/buttonColor"
+
                 />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -79,6 +81,8 @@
                 android:layout_marginEnd="50dp"
                 android:layout_marginTop="6dp"
                 app:fabSize="mini"
+                android:backgroundTint="@color/buttonColor"
+
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

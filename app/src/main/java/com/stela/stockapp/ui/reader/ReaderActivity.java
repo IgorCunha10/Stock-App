@@ -164,6 +164,6 @@ public class ReaderActivity extends AppCompatActivity {
     }
 
     private void playStopBeep() {
-        toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 120);
+            toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 120);
     }
 }
