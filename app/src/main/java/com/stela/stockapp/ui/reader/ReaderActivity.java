@@ -45,7 +45,7 @@ public class ReaderActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> addProductLauncher;
     private ReaderViewModel viewModel;
     private ToneGenerator toneGenerator;
-    private static final String EXTRA_MODE = "EXTRA_MODE";
+    public static final String EXTRA_MODE = "EXTRA_MODE";
     public static final String MODE_SELECT = "MODE_SELECT";
     public static final String EXTRA_TAG = "EXTRA_TAG";
     private boolean isSelectMode = false;
@@ -165,7 +165,7 @@ public class ReaderActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(ReaderActivity.this,
                             NewProductActivity.class);
-                    intent.putExtra("epc", tag.getEpc());
+                    intent.putExtra(EXTRA_TAG, tag.getEpc());
                     addProductLauncher.launch(intent);
                 }
             }
