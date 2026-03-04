@@ -93,7 +93,7 @@ public class ProductHistory {
 
 
 
-    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+    public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL(
@@ -102,7 +102,6 @@ public class ProductHistory {
                             "`productId` INTEGER NOT NULL, " +
                             "`productName` TEXT, " +
                             "`productDescription` TEXT, " +
-                            "`productQuantity` INTEGER NOT NULL, " +
                             "`productPrice` REAL NOT NULL, " +
                             "`action` TEXT, " +
                             "`movedQuantity` INTEGER NOT NULL, " +

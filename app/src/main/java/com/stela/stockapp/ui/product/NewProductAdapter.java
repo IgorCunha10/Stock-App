@@ -43,8 +43,8 @@ public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.Pr
         holder.Product_Name.setText(product.getProductName());
         holder.Product_Id.setText(String.valueOf(product.getProductId()));
         holder.Product_Description.setText(product.getProductDescription());
-        holder.Product_Quantity.setText(String.valueOf(product.getProductQuantity()));
         holder.Product_Price.setText(String.valueOf(product.getProductPrice()));
+        holder.Product_Tag.setText(product.getProductTag());
         holder.bind(product);
     }
 
@@ -54,7 +54,7 @@ public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.Pr
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView Product_Name, Product_Description, Product_Quantity, Product_Id, Product_Price;
+        TextView Product_Name, Product_Description, Product_Tag, Product_Id, Product_Price;
         ImageButton editBtn, deleteBtn;
 
 
@@ -63,9 +63,8 @@ public class NewProductAdapter extends RecyclerView.Adapter<NewProductAdapter.Pr
             Product_Name = itemView.findViewById(R.id.prName);
             Product_Id = itemView.findViewById(R.id.prId);
             Product_Description = itemView.findViewById(R.id.prDescription);
-            Product_Quantity = itemView.findViewById(R.id.prQuantity);
             Product_Price = itemView.findViewById(R.id.prPrice);
-
+            Product_Tag = itemView.findViewById(R.id.prTag);
             editBtn = itemView.findViewById(R.id.editBtn);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
 

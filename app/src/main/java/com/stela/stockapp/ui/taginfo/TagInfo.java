@@ -7,10 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.stockapp.R;
+import com.stela.stockapp.ui.movimentation.MovimentationAdapter;
+import com.stela.stockapp.ui.movimentation.MovimentationViewModel;
 
 public class TagInfo extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,7 @@ public class TagInfo extends AppCompatActivity {
             return insets;
         });
     }
+
 
 
 

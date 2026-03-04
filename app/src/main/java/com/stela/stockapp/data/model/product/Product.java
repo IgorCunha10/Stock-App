@@ -12,15 +12,16 @@ public class Product implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int productId;
     public String productName, productDescription;
-    public int productQuantity;
     public double productPrice;
+    private String productTag;
 
-    public Product(String productName, String productDescription, int productQuantity, double productPrice) {
+    public Product(String productName,  String productDescription, String productTag,
+                   double productPrice) {
 
         this.productName = productName;
         this.productDescription = productDescription;
-        this.productQuantity = productQuantity;
         this.productPrice = productPrice;
+        this.productTag = productTag;
     }
 
     public Product() {
@@ -32,6 +33,13 @@ public class Product implements Serializable {
 
     public String getProductName() {
         return productName;
+    }
+    public void setProductTag(String productTag) {
+        this.productTag = productTag;
+    }
+
+    public String getProductTag(){
+        return productTag;
     }
 
     public void setProductId(int productId) {
@@ -48,14 +56,6 @@ public class Product implements Serializable {
 
     public String getProductDescription() {
         return productDescription;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
-    }
-
-    public int getProductQuantity() {
-        return productQuantity;
     }
 
     public void setProductPrice(double productPrice) {

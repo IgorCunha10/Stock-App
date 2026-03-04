@@ -26,6 +26,7 @@ import com.stela.stockapp.domain.Tag;
 import com.stela.stockapp.ui.main.MainViewModel;
 import com.stela.stockapp.ui.product.NewProductActivity;
 import com.stela.stockapp.ui.product.NewProductAdapter;
+import com.stela.stockapp.ui.taginfo.TagInfo;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModel;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModelFactory;
 
@@ -44,12 +45,23 @@ public class ReaderActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> addProductLauncher;
     private ReaderViewModel viewModel;
     private ToneGenerator toneGenerator;
+    private static final String EXTRA_MODE = "EXTRA_MODE";
+    public static final String MODE_SELECT = "MODE_SELECT";
+    public static final String EXTRA_TAG = "EXTRA_TAG";
+    private boolean isSelectMode = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_reader);
+
+        if (getIntent() != null && MODE_SELECT.equals(getIntent().getStringExtra(EXTRA_MODE))) {
+            isSelectMode = true;
+        }
+
+
 
         initView();
 
@@ -78,9 +90,9 @@ public class ReaderActivity extends AppCompatActivity {
         viewModel.getTags().observe(this, tags -> readerAdapter.submitList(tags));
 
         viewModel.isConnected().observe(this, connected -> {
-            btnConnect.setText(connected ? "Conectado" : "Conectar");
+            btnConnect.setText(connected ? "Connected" : "Connect");
             Toast.makeText(this,
-                    connected ? "Leitora Conectada" : "Conecte a Leitora",
+                    connected ? "Reader Connected" : "Connect the Reader",
                     Toast.LENGTH_SHORT).show();
         });
     }
@@ -120,6 +132,7 @@ public class ReaderActivity extends AppCompatActivity {
                     v.performClick();
                     return true;
 
+
             }
             return false;
         });
@@ -140,19 +153,30 @@ public class ReaderActivity extends AppCompatActivity {
         readerAdapter = new ReaderAdapter();
 
         readerAdapter.setOnTagActionListener(new ReaderAdapter.OnTagActionListener() {
+
             @Override
             public void onAddProductClick(Tag tag) {
-                Intent intent = new Intent(ReaderActivity.this, NewProductActivity.class);
-                intent.putExtra("epc", tag.getEpc()); // se quiser já passar a tag lida
-                addProductLauncher.launch(intent);
+
+                if (isSelectMode) {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(EXTRA_TAG, tag.getEpc());
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(ReaderActivity.this,
+                            NewProductActivity.class);
+                    intent.putExtra("epc", tag.getEpc());
+                    addProductLauncher.launch(intent);
+                }
             }
+
 
             @Override
             public void onInfoClick(Tag tag) {
-                Toast.makeText(ReaderActivity.this,
-                        "Tag: " + tag.getEpc() + "\nRSSI: " + tag.getRssi(),
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ReaderActivity.this, TagInfo.class);
+                startActivity(intent);
             }
+
         });
 
         rvTagList.setLayoutManager(new LinearLayoutManager(this));

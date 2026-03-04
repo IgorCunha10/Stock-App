@@ -1,6 +1,6 @@
 package com.stela.stockapp.data.local;
 
-import static com.stela.stockapp.data.model.history.ProductHistory.MIGRATION_2_3;
+import static com.stela.stockapp.data.model.history.ProductHistory.MIGRATION_3_4;
 
 import android.content.Context;
 
@@ -11,7 +11,7 @@ import androidx.room.RoomDatabase;
 import com.stela.stockapp.data.model.history.ProductHistory;
 import com.stela.stockapp.data.model.product.Product;
 
-@Database(entities = {Product.class, ProductHistory.class}, version = 3)
+@Database(entities = {Product.class, ProductHistory.class}, version = 2)
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract ProductsDao productsDao();
@@ -30,8 +30,8 @@ public abstract class AppDataBase extends RoomDatabase {
                                     context.getApplicationContext(),
                                     AppDataBase.class,
                                     "estoque_db"
-                            ).addMigrations(MIGRATION_2_3)
-
+                            )
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

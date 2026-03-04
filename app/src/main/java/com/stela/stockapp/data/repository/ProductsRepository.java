@@ -43,7 +43,6 @@ public class ProductsRepository {
         history.productId = product.getProductId();
         history.productName = product.getProductName();
         history.productDescription = product.getProductDescription();
-        history.productQuantity = product.getProductQuantity();
         history.productPrice = product.getProductPrice();
         history.action = action;
         history.movedQuantity = movedQty;

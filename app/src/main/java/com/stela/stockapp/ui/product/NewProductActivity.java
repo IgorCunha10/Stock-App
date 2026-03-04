@@ -8,22 +8,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.stela.stockapp.R;
-import com.stela.stockapp.data.repository.ProductsRepository;
 import com.stela.stockapp.data.model.product.Product;
+import com.stela.stockapp.ui.reader.ReaderActivity;
 
 public class NewProductActivity extends AppCompatActivity {
 
     private Product actualProduct;
-    private EditText edtName, edtDescription, edtQuantity, edtPrice;
+    private EditText edtName, edtDescription, edtPrice;
     private TextView pageName;
-    private Button saveButton;
+    private Button saveButton, scanTagBtn;
     private boolean isEdit = false;
-
     private NewProductViewModel viewModel;
+
+    private ActivityResultLauncher<Intent> scanLauncher;
+    private EditText editTextTag;
+    private TextView txtSelectedTag;
+    private String selectedTag;
 
 
     @Override
@@ -31,6 +37,22 @@ public class NewProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_new_product);
+
+        scanLauncher =
+                registerForActivityResult(
+                        new ActivityResultContracts.StartActivityForResult(),
+                        result -> {
+                            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                                selectedTag = result.getData().getStringExtra("EXTRA_TAG");
+
+                                if (selectedTag != null) {
+                                    txtSelectedTag.setText("Tag: " + selectedTag);
+                                }
+                            }
+                        }
+                );
+
+
 
         viewModel = new ViewModelProvider(this)
                 .get(NewProductViewModel.class);
@@ -56,7 +78,6 @@ public class NewProductActivity extends AppCompatActivity {
             isEdit = true;
             actualProduct = (Product) intent.getSerializableExtra("product");
 
-
             loadData();
             configEditScreen();
         }
@@ -65,16 +86,16 @@ public class NewProductActivity extends AppCompatActivity {
     private void initView() {
         edtName = findViewById(R.id.edtName);
         edtDescription = findViewById(R.id.edtDescription);
-        edtQuantity = findViewById(R.id.edtQuantity);
         edtPrice = findViewById(R.id.edtPrice);
         pageName = findViewById(R.id.pageName);
         saveButton = findViewById(R.id.btnSave);
+        scanTagBtn = findViewById((R.id.scanTagBtn));
+        txtSelectedTag = findViewById(R.id.txtSelectedTag);
     }
 
     private void loadData() {
         edtName.setText(actualProduct.getProductName());
         edtDescription.setText(actualProduct.getProductDescription());
-        edtQuantity.setText(String.valueOf(actualProduct.getProductQuantity()));
         edtPrice.setText(String.valueOf(actualProduct.getProductPrice()));
 
     }
@@ -85,21 +106,17 @@ public class NewProductActivity extends AppCompatActivity {
     }
 
 
+
     private void initListeners() {
         saveButton.setOnClickListener(v -> {
             String name = edtName.getText().toString();
             String description = edtDescription.getText().toString();
-            int quantity = 0;
             double price = 0;
-
-            String quantityStr = edtQuantity.getText().toString();
-            if (!quantityStr.isBlank()) {
-                try {
-                    quantity = Integer.parseInt(quantityStr);
-                } catch (Exception e) {
-                    Toast.makeText(this, "Insert a valid Number", Toast.LENGTH_SHORT).show();
-                }
+            if (selectedTag == null || selectedTag.isBlank()) {
+                Toast.makeText(this, "Scan a tag first", Toast.LENGTH_SHORT).show();
+                return;
             }
+
 
             String priceStr = edtPrice.getText().toString();
 
@@ -119,22 +136,22 @@ public class NewProductActivity extends AppCompatActivity {
             product.setProductPrice(price);
             product.setProductName(name);
             product.setProductDescription(description);
-            product.setProductQuantity(quantity);
+            product.setProductTag(selectedTag);
 
             if (isEdit) {
                 actualProduct.setProductName(name);
                 actualProduct.setProductDescription(description);
-                actualProduct.setProductQuantity(quantity);
                 actualProduct.setProductPrice(price);
 
                 viewModel.saveProduct(actualProduct, true);
-                Toast.makeText(this, "Product updated succesfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Product updated succesfully",
+                        Toast.LENGTH_SHORT).show();
 
             } else {
                 Product newProduct = new Product(
                         name,
                         description,
-                        quantity,
+                        selectedTag,
                         price
                 );
 
@@ -146,6 +163,15 @@ public class NewProductActivity extends AppCompatActivity {
 
         });
 
+        scanTagBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(
+                    NewProductActivity.this,
+                    ReaderActivity.class
+            );
+
+            intent.putExtra("EXTRA_MODE", "MODE_SELECT");
+            scanLauncher.launch(intent);
+        });
 
     }
 

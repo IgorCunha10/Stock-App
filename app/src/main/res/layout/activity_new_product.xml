@@ -65,7 +65,6 @@
             android:paddingTop="24dp"
             android:paddingBottom="32dp">
 
-            <!-- Product Name Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,6 +101,55 @@
                         android:paddingStart="0dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="false"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/productTag"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Product Tag"
+                        android:textSize="14sp"
+                        android:textColor="@color/textPrimary"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <Button
+                        android:id="@+id/scanTagBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Scan Tag"
+                        android:backgroundTint="@color/buttonColor"
+                        android:textColor="@android:color/white"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtSelectedTag"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No tag selected"
+                        android:textSize="14sp"
+                        android:textColor="@color/textPrimary"
+                        android:layout_marginTop="12dp"
+                        />
+
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
 
             <!-- Product Description Card -->
             <com.google.android.material.card.MaterialCardView
@@ -144,45 +192,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Product Quantity Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="false"
-                app:strokeWidth="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/productQuantity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Product Quantity"
-                        android:textSize="14sp"
-                        android:textColor="@color/textPrimary"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp"/>
-
-                    <EditText
-                        android:id="@+id/edtQuantity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Type the quantity"
-                        android:background="@android:color/transparent"
-                        android:textSize="16sp"
-                        android:inputType="number"
-                        android:padding="12dp"
-                        android:paddingStart="0dp"/>
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
 
             <!-- Product Price Card -->
             <com.google.android.material.card.MaterialCardView
