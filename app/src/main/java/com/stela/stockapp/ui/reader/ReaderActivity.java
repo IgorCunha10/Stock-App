@@ -28,6 +28,11 @@ import com.stela.stockapp.ui.product.NewProductActivity;
 import com.stela.stockapp.ui.taginfo.TagInfo;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModel;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModelFactory;
+import android.speech.tts.TextToSpeech;
+
+import org.w3c.dom.Text;
+
+import java.util.Locale;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -49,6 +54,7 @@ public class ReaderActivity extends AppCompatActivity {
     public static final String EXTRA_TAG = "EXTRA_TAG";
     private boolean isSelectMode = false;
 
+    private TextToSpeech tts;
 
     private final Set<String> processedTags = new HashSet<>();
 
@@ -92,12 +98,11 @@ public class ReaderActivity extends AppCompatActivity {
 
         readerViewModel.getProductLiveData().observe(this, product -> {
             if (product != null) {
-                Toast.makeText(this, "Tag já cadastrada! Produto: " +
-                        product.getProductName(), Toast.LENGTH_LONG).show();
+                String message = "Tag já cadastrada! Produto: " + product.getProductName();
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                speak(message);
             }
         });
-
-        readerViewModel = new ViewModelProvider(this, factory).get(ReaderViewModel.class);
 
         readerViewModel.getProductLiveData().observe(this, product -> {
             if (product != null) {
@@ -109,6 +114,7 @@ public class ReaderActivity extends AppCompatActivity {
 
         readerViewModel.getError().observe(this, message -> {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            speak(message);
         });
 
         readerViewModel.loadProducts(() -> fabScanTag.setEnabled(true));
@@ -118,8 +124,27 @@ public class ReaderActivity extends AppCompatActivity {
         initListeners();
 
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+
+        tts = new TextToSpeech(this, status -> {
+            if(status == TextToSpeech.SUCCESS) {
+                int result = tts.setLanguage(new Locale("pt", "BR"));
+                if(result == TextToSpeech.LANG_MISSING_DATA ||
+                        result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Toast.makeText(this, "TTS is not suported in this device", Toast.LENGTH_SHORT).show();
+
+                }
+            } else {
+                Toast.makeText(this, "Failed to initialize TTs", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
+    private void speak(String text) {
+        if(tts != null) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "tagRead");
+        }
+    }
     private void initView() {
         btnConnect = findViewById(R.id.btnConnect);
         btnClear = findViewById(R.id.btnClear);
@@ -204,5 +229,15 @@ public class ReaderActivity extends AppCompatActivity {
 
     private void playStopBeep() {
         toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 120);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(tts != null) {
+            tts.stop();
+            tts.shutdown();
+
+        }
+        super.onDestroy();
     }
 }
