@@ -25,7 +25,6 @@ public class NewProductActivity extends AppCompatActivity {
     private Button saveButton, scanTagBtn;
     private boolean isEdit = false;
     private NewProductViewModel viewModel;
-
     private ActivityResultLauncher<Intent> scanLauncher;
     private String selectedTag;
 
@@ -83,19 +82,23 @@ public class NewProductActivity extends AppCompatActivity {
 
     private void handleIntentData() {
         Intent intent = getIntent();
-
         if (intent == null) return;
 
-        // 🔵 Caso venha para edição
-        if (intent.hasExtra("product")) {
+        if (intent.hasExtra("product_id")) {
             isEdit = true;
-            actualProduct = (Product) intent.getSerializableExtra("product");
+            int productId = intent.getIntExtra("product_id", -1);
 
-            loadData();
-            configEditScreen();
+            if (productId != -1) {
+                viewModel.getProduct(productId).observe(this, product -> {
+                    if (product != null) {
+                        actualProduct = product;
+                        loadData();
+                        configEditScreen();
+                    }
+                });
+            }
         }
 
-        // 🟢 Caso venha direto do scanner
         if (intent.hasExtra(ReaderActivity.EXTRA_TAG)) {
             selectedTag = intent.getStringExtra(ReaderActivity.EXTRA_TAG);
             updateTagUI();
@@ -113,7 +116,7 @@ public class NewProductActivity extends AppCompatActivity {
         edtDescription.setText(actualProduct.getProductDescription());
         edtPrice.setText(String.valueOf(actualProduct.getProductPrice()));
 
-        selectedTag = actualProduct.getProductTag();
+        //selectedTag = actualProduct.getProductTag();
         updateTagUI();
     }
 
@@ -153,7 +156,7 @@ public class NewProductActivity extends AppCompatActivity {
                 actualProduct.setProductName(name);
                 actualProduct.setProductDescription(description);
                 actualProduct.setProductPrice(price);
-                actualProduct.setProductTag(selectedTag);
+              //  actualProduct.setProductTag(selectedTag);
 
                 viewModel.saveProduct(actualProduct, true);
 
@@ -161,9 +164,9 @@ public class NewProductActivity extends AppCompatActivity {
 
                 Product newProduct = new Product(
                         name,
+                        price,
                         description,
-                        selectedTag,
-                        price
+                        selectedTag
                 );
 
                 viewModel.saveProduct(newProduct, false);

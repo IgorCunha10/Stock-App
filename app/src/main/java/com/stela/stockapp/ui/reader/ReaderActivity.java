@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,16 +21,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
 import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.repository.ReaderRepository;
+import com.stela.stockapp.data.repository.TagRepository;
 import com.stela.stockapp.domain.Tag;
 import com.stela.stockapp.ui.main.MainViewModel;
 import com.stela.stockapp.ui.product.NewProductActivity;
-import com.stela.stockapp.ui.product.NewProductAdapter;
 import com.stela.stockapp.ui.taginfo.TagInfo;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModel;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModelFactory;
 
-import java.util.ArrayList;
-
+import java.util.HashSet;
+import java.util.Set;
 
 public class ReaderActivity extends AppCompatActivity {
 
@@ -41,15 +40,17 @@ public class ReaderActivity extends AppCompatActivity {
     private ReaderAdapter readerAdapter;
 
     private MainViewModel mainViewModel;
-
     private ActivityResultLauncher<Intent> addProductLauncher;
-    private ReaderViewModel viewModel;
+    private ReaderViewModel readerViewModel;
     private ToneGenerator toneGenerator;
+
     public static final String EXTRA_MODE = "EXTRA_MODE";
     public static final String MODE_SELECT = "MODE_SELECT";
     public static final String EXTRA_TAG = "EXTRA_TAG";
     private boolean isSelectMode = false;
 
+
+    private final Set<String> processedTags = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,84 +62,62 @@ public class ReaderActivity extends AppCompatActivity {
             isSelectMode = true;
         }
 
-
-
         initView();
-
-        ReaderRepository repository = new ReaderRepository(this);
-        viewModel = new ViewModelProvider(
-                this,
-                new ReaderViewModelFactory(repository)
-        ).get(ReaderViewModel.class);
-
-        mainViewModel = new ViewModelProvider(this)
-                .get(MainViewModel.class);
-
-        initActivityResults();
         initRecyclerView();
-        initObservers();
-        initListeners();
+        initActivityResults();
 
-        toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        ReaderRepository readerRepository = new ReaderRepository(this);
+        TagRepository tagRepository = new TagRepository(this);
 
-        viewModel.getError().observe(this, msg -> {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        ReaderViewModelFactory factory =
+                new ReaderViewModelFactory(readerRepository, tagRepository);
+
+        readerViewModel = new ViewModelProvider(this, factory)
+                .get(ReaderViewModel.class);
+
+        readerViewModel.getError().observe(this, msg ->
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        );
+
+        readerViewModel.getTags().observe(this, tags -> {
+            readerAdapter.submitList(tags);
         });
-    }
 
-    private void initObservers() {
-        viewModel.getTags().observe(this, tags -> readerAdapter.submitList(tags));
-
-        viewModel.isConnected().observe(this, connected -> {
+        readerViewModel.isConnected().observe(this, connected -> {
             btnConnect.setText(connected ? "Connected" : "Connect");
             Toast.makeText(this,
                     connected ? "Reader Connected" : "Connect the Reader",
                     Toast.LENGTH_SHORT).show();
         });
-    }
 
-    private void initActivityResults() {
-        addProductLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if(result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        if(data != null && data.hasExtra("product")) {
-                            Product product =
-                                    (Product) data.getSerializableExtra("product");
-
-                            mainViewModel.addProduct(product);
-                        }
-                    }
-                }
-        );
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void initListeners() {
-        btnConnect.setOnClickListener(v -> viewModel.connect());
-
-        fabScanTag.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    playStartBeep();
-                    viewModel.startScan();
-                    return true;
-
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    playStopBeep();
-                    viewModel.stopScan();
-                    v.performClick();
-                    return true;
-
-
+        readerViewModel.getProductLiveData().observe(this, product -> {
+            if (product != null) {
+                Toast.makeText(this, "Tag já cadastrada! Produto: " +
+                        product.getProductName(), Toast.LENGTH_LONG).show();
             }
-            return false;
         });
 
-        btnClear.setOnClickListener(v -> viewModel.clearTags());
+        readerViewModel = new ViewModelProvider(this, factory).get(ReaderViewModel.class);
 
+        readerViewModel.getProductLiveData().observe(this, product -> {
+            if (product != null) {
+                Toast.makeText(this,
+                        "Tag já cadastrada! Produto: " + product.getProductName(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        readerViewModel.getError().observe(this, message -> {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
+
+        readerViewModel.loadProducts(() -> fabScanTag.setEnabled(true));
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        initListeners();
+
+        toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
     }
 
     private void initView() {
@@ -146,17 +125,13 @@ public class ReaderActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClear);
         fabScanTag = findViewById(R.id.fabScanTag);
         rvTagList = findViewById(R.id.rvTagList);
-
     }
 
     private void initRecyclerView() {
         readerAdapter = new ReaderAdapter();
-
         readerAdapter.setOnTagActionListener(new ReaderAdapter.OnTagActionListener() {
-
             @Override
             public void onAddProductClick(Tag tag) {
-
                 if (isSelectMode) {
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(EXTRA_TAG, tag.getEpc());
@@ -170,17 +145,57 @@ public class ReaderActivity extends AppCompatActivity {
                 }
             }
 
-
             @Override
             public void onInfoClick(Tag tag) {
                 Intent intent = new Intent(ReaderActivity.this, TagInfo.class);
                 startActivity(intent);
             }
-
         });
 
         rvTagList.setLayoutManager(new LinearLayoutManager(this));
         rvTagList.setAdapter(readerAdapter);
+    }
+
+    private void initActivityResults() {
+        addProductLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null && data.hasExtra("product")) {
+                            Product product =
+                                    (Product) data.getSerializableExtra("product");
+                            mainViewModel.addProduct(product);
+                        }
+                    }
+                }
+        );
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void initListeners() {
+        btnConnect.setOnClickListener(v -> readerViewModel.connect());
+
+        fabScanTag.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    playStartBeep();
+                    readerViewModel.startScan();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    playStopBeep();
+                    readerViewModel.stopScan();
+                    v.performClick();
+                    return true;
+            }
+            return false;
+        });
+
+        btnClear.setOnClickListener(v -> {
+            processedTags.clear();
+            readerViewModel.clearTags();
+        });
     }
 
     private void playStartBeep() {
@@ -188,6 +203,6 @@ public class ReaderActivity extends AppCompatActivity {
     }
 
     private void playStopBeep() {
-            toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 120);
+        toneGenerator.startTone(ToneGenerator.TONE_PROP_NACK, 120);
     }
 }

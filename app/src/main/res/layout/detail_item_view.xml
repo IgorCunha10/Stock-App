@@ -70,6 +70,33 @@
                 android:paddingBottom="8dp">
 
                 <TextView
+                    android:id="@+id/prmvTagL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.6"
+                    android:text="Product Tag"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/prmvTag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="12345ABCDEFGH"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+
+                <TextView
                     android:id="@+id/prmvDescriptionL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,32 +114,6 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="16sp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="8dp">
-
-                <TextView
-                    android:id="@+id/prmvQuantityL"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.6"
-                    android:text="Quantity"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/prmvQuantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="20"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"

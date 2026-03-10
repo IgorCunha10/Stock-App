@@ -2,12 +2,14 @@ package com.stela.stockapp.ui.product;
 
 import android.app.Application;
 
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.stela.stockapp.data.model.product.Product;
+import com.stela.stockapp.data.model.tag.TagEntity;
 import com.stela.stockapp.data.repository.ProductsRepository;
 
 public class NewProductViewModel extends AndroidViewModel {
@@ -21,8 +23,13 @@ public class NewProductViewModel extends AndroidViewModel {
 
     }
 
+
     public LiveData<Boolean> getSaveSuccess(){
         return saveSuccess;
+    }
+
+    public LiveData<Product> getProduct(int id){
+        return repository.findById(id);
     }
 
     public void saveProduct(Product product, boolean isEdit) {
@@ -30,11 +37,17 @@ public class NewProductViewModel extends AndroidViewModel {
         if(isEdit) {
             repository.updateProduct(product);
         } else {
-            repository.addProduct(product);
+            TagEntity tagEntity = new TagEntity();
+            tagEntity.setId(product.getTagId());
+            repository.insertProductWithTag(product, tagEntity);
         }
 
         saveSuccess.setValue(true);
 
     }
 
-}
+
+
+    }
+
+

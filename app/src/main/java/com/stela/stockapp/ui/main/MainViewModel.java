@@ -6,34 +6,40 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.stela.stockapp.data.model.pojo.ProductTagJoin;
 import com.stela.stockapp.data.model.product.Product;
+import com.stela.stockapp.data.model.tag.TagEntity;
 import com.stela.stockapp.data.repository.ProductsRepository;
 
 import java.util.List;
 
 public class MainViewModel extends AndroidViewModel {
 
-    private final ProductsRepository repository;
-    private final LiveData<List<Product>> allProducts;
+    private final ProductsRepository productRepository;
+    private final LiveData<List<ProductTagJoin>> allProducts;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-
-        repository = ProductsRepository.getInstance(application);
-        allProducts = repository.getAll();
-
+        productRepository = ProductsRepository.getInstance(application);
+        allProducts = productRepository.getAll();
     }
 
-    public LiveData<List<Product>> getAllProducts() {
+    public LiveData<List<ProductTagJoin>> getAllProducts() {
         return allProducts;
     }
 
     public void addProduct(Product product) {
-        repository.addProduct(product);
+        TagEntity tagEntity = new TagEntity();
+        tagEntity.setId(product.getTagId());
+        productRepository.insertProductWithTag(product, tagEntity);
     }
+
 
     public void deleteProduct(Product product) {
-        repository.deleteProduct(product);
+        productRepository.deleteProduct(product);
     }
 
+    public void deleteProductById(int id) {
+        productRepository.deleteProductById(id);
+    }
 }

@@ -10,8 +10,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.stockapp.R;
-import com.stela.stockapp.ui.movimentation.MovimentationAdapter;
-import com.stela.stockapp.ui.movimentation.MovimentationViewModel;
+//import com.stela.stockapp.ui.movimentation.MovimentationAdapter;
+//import com.stela.stockapp.ui.movimentation.MovimentationViewModel;
 
 public class TagInfo extends AppCompatActivity {
 

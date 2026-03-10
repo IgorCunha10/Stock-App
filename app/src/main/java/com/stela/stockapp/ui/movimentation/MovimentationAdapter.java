@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MovimentationAdapter extends RecyclerView.Adapter<MovimentationAdapter.HistoryViewHolder> {
+/* public class MovimentationAdapter extends RecyclerView.Adapter<MovimentationAdapter.HistoryViewHolder> {
 
     private List<ProductHistory> historyList;
 
@@ -38,11 +38,11 @@ public class MovimentationAdapter extends RecyclerView.Adapter<MovimentationAdap
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         ProductHistory history = historyList.get(position);
 
-        holder.productName.setText(history.getProductName());
+        //holder.productName.setText(history.getProductName());
         holder.productId.setText(String.valueOf(history.getProductId()));
-        holder.productDescription.setText(history.getProductDescription());
-        holder.productQuantity.setText(String.valueOf(history.getProductQuantity()));
-        holder.productPrice.setText(String.format(Locale.getDefault(), "$%.2f", history.getProductPrice()));
+        holder.productTag.setText(history.getProductTag());
+        //holder.productDescription.setText(history.getProductDescription());
+        // holder.productPrice.setText(String.format(Locale.getDefault(), "$%.2f", history.getProductPrice()));
 
         holder.productAction.setText(history.getAction());
 
@@ -67,7 +67,7 @@ public class MovimentationAdapter extends RecyclerView.Adapter<MovimentationAdap
     static class HistoryViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView productName, productId, productDescription, productQuantity, productPrice, productMovedQntity, productTimestamp, productAction;
+        TextView productName, productId, productDescription, productTag, productPrice,  productTimestamp, productAction;
 
         public HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,13 +75,15 @@ public class MovimentationAdapter extends RecyclerView.Adapter<MovimentationAdap
             productName = itemView.findViewById(R.id.prName);
             productId = itemView.findViewById(R.id.prmvId);
             productDescription = itemView.findViewById(R.id.prmvDescription);
-            productQuantity = itemView.findViewById(R.id.prmvQuantity);
             productPrice = itemView.findViewById(R.id.prmvPrice);
             productTimestamp = itemView.findViewById(R.id.prmvDate);
             productAction = itemView.findViewById(R.id.prmvType);
+            productTag = itemView.findViewById(R.id.prmvTag);
 
 
         }
     }
 
 }
+
+ */

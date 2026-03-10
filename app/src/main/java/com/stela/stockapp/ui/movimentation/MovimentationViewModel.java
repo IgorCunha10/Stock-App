@@ -11,7 +11,7 @@ import com.stela.stockapp.data.repository.HistoryRepository;
 
 import java.util.List;
 
-public class MovimentationViewModel extends AndroidViewModel {
+/* public class MovimentationViewModel extends AndroidViewModel {
 
     private final HistoryRepository repository;
     private final LiveData<List<ProductHistory>> allHistory;
@@ -35,3 +35,5 @@ public class MovimentationViewModel extends AndroidViewModel {
     }
 
 }
+
+ */

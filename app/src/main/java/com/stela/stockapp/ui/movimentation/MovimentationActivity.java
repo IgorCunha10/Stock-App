@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.stockapp.R;
 import com.stela.stockapp.data.local.AppDataBase;
-import com.stela.stockapp.data.local.HistoryDao;
+//import com.stela.stockapp.data.local.HistoryDao;
 
 import java.util.ArrayList;
 
-public class MovimentationActivity extends AppCompatActivity {
+/* public class MovimentationActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MovimentationAdapter movimentationAdapter;
@@ -60,3 +60,5 @@ public class MovimentationActivity extends AppCompatActivity {
 
 
 }
+
+     */

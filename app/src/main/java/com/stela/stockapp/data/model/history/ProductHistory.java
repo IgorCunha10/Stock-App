@@ -1,114 +1,61 @@
 package com.stela.stockapp.data.model.history;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.stela.stockapp.data.model.product.Product;
 
 @Entity(
-        tableName = "products_history"
+        tableName = "products_history",
+        foreignKeys = @ForeignKey(
+                entity = Product.class,
+                parentColumns = "id",
+                childColumns = "product_id",
+                onDelete = ForeignKey.CASCADE
+        ),
+        indices = {@Index("product_id")}
 )
 public class ProductHistory {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     public int id;
 
+    @ColumnInfo(name = "product_id")
     public int productId;
 
-    public int getProductId() {
-        return productId;
-    }
+    @ColumnInfo(name = "product_action")
+    public String productAction;
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getProductDescription() {
-        return productDescription;
-    }
-
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
-    }
-
-    public int getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public double getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(double productPrice) {
-        this.productPrice = productPrice;
-    }
-
-    public int getMovedQuantity() {
-        return movedQuantity;
-    }
-
-    public void setMovedQuantity(int movedQuantity) {
-        this.movedQuantity = movedQuantity;
-    }
-
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public String productName;
-    public String productDescription;
-    public int productQuantity;
-    public double productPrice;
-
-    public String action;
-
+    @ColumnInfo(name = "moved_quantity")
     public int movedQuantity;
+
+    @ColumnInfo(name = "time_stamp")
     public long timeStamp;
 
+    @ColumnInfo(name = "product_tag")
+    public String productTag;
 
+    // Getters e Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
-        @Override
-        public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL(
-                    "CREATE TABLE IF NOT EXISTS `products_history` (" +
-                            "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                            "`productId` INTEGER NOT NULL, " +
-                            "`productName` TEXT, " +
-                            "`productDescription` TEXT, " +
-                            "`productPrice` REAL NOT NULL, " +
-                            "`action` TEXT, " +
-                            "`movedQuantity` INTEGER NOT NULL, " +
-                            "`timeStamp` INTEGER NOT NULL)"
-            );
-        }
-    };
+    public int getProductId() { return productId; }
+    public void setProductId(int productId) { this.productId = productId; }
 
+    public String getProductAction() { return productAction; }
+    public void setProductAction(String productAction) { this.productAction = productAction; }
 
+    public int getMovedQuantity() { return movedQuantity; }
+    public void setMovedQuantity(int movedQuantity) { this.movedQuantity = movedQuantity; }
+
+    public long getTimeStamp() { return timeStamp; }
+    public void setTimeStamp(long timeStamp) { this.timeStamp = timeStamp; }
+
+    public String getProductTag() { return productTag; }
+    public void setProductTag(String productTag) { this.productTag = productTag; }
 }

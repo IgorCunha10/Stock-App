@@ -27,7 +27,7 @@ public class ReaderRepository {
         try {
             otgReader.ScanTags();
         } catch (ReaderException e) {
-            throw new RuntimeException(e); // ou logar
+            throw new RuntimeException(e);
         }
     }
 
