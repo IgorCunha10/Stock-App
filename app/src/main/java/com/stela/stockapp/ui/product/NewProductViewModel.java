@@ -45,7 +45,7 @@ public class NewProductViewModel extends AndroidViewModel {
         } else {
             TagEntity tagEntity = new TagEntity();
             tagEntity.setId(product.getTagId());
-            repository.insertProductWithTag(product, tagEntity);
+            repository.insertProductWithTag(product);
         }
 
         saveSuccess.setValue(true);

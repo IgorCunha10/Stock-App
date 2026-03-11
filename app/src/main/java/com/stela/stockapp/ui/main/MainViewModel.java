@@ -32,9 +32,8 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void addProduct(Product product) {
-        TagEntity tagEntity = new TagEntity();
-        tagEntity.setId(product.getTagId());
-        productRepository.insertProductWithTag(product, tagEntity);
+
+        productRepository.insertProductWithTag(product);
     }
 
 

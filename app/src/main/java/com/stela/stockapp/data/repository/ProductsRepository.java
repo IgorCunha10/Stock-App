@@ -37,14 +37,14 @@ public class ProductsRepository {
         return productsDao.getAllProductsWithTag();
     }
 
-    public void insertProductWithTag(Product product, TagEntity tag) {
+    public void insertProductWithTag(Product product) {
         executor.execute(() -> {
+            TagEntity tagEntity = new TagEntity();
+            tagEntity.setId(product.getTagId());
 
-            tagsDao.insert(tag);
-
+            tagsDao.insert(tagEntity);
             long id = productsDao.insert(product);
             product.setId((int) id);
-
         });
     }
 
