@@ -22,17 +22,13 @@ public class ReaderViewModel extends ViewModel {
 
     private final ReaderRepository readerRepository;
     private final TagRepository tagRepository;
-
     private final MutableLiveData<List<Tag>> tagsLiveData = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Boolean> connectedLiveData = new MutableLiveData<>(false);
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<Product> productLiveData = new MutableLiveData<>();
-
     private final Map<String, Long> lastReadMap = new HashMap<>();
     private final Map<String, Product> productCache = new HashMap<>();
-
     private static final long READ_COOLDOWN_MS = 300;
-
     public ReaderViewModel(ReaderRepository readerRepository, TagRepository tagRepository) {
         this.readerRepository = readerRepository;
         this.tagRepository = tagRepository;

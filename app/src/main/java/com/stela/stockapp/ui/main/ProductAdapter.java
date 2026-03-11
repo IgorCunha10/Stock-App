@@ -38,14 +38,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         ProductDto product = products.get(position);
 
-        holder.product_Id.setText(String.valueOf(product.getId()));
-        holder.product_Name.setText(product.getProductName());
-        holder.product_Description.setText(product.getProductDescription());
-        holder.product_Price.setText(String.format("R$ %.2f", product.getProductPrice()));
+        holder.productId.setText(String.valueOf(product.getId()));
+        holder.productName.setText(product.getProductName());
+        holder.productDescription.setText(product.getProductDescription());
+        holder.productPrice.setText(String.format("R$ %.2f", product.getProductPrice()));
         if (product.getTagNumber() != null) {
-            holder.product_Tag.setText(product.getTagNumber());
+            holder.productTag.setText(product.getTagNumber());
         } else {
-            holder.product_Tag.setText("Produto sem Tag");
+            holder.productTag.setText("Produto sem Tag");
         }
 
         holder.bind(product);
@@ -57,20 +57,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView product_Name,
-                 product_Description,
-                 product_Tag,
-                 product_Id,
-                 product_Price;
+        TextView productName,
+                 productDescription,
+                 productTag,
+                 productId,
+                 productPrice;
         ImageButton editBtn, deleteBtn;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-            product_Name = itemView.findViewById(R.id.prName);
-            product_Id = itemView.findViewById(R.id.prId);
-            product_Description = itemView.findViewById(R.id.prDescription);
-            product_Price = itemView.findViewById(R.id.prPrice);
-            product_Tag = itemView.findViewById(R.id.prTag);
+            productName = itemView.findViewById(R.id.prName);
+            productId = itemView.findViewById(R.id.prId);
+            productDescription = itemView.findViewById(R.id.prDescription);
+            productPrice = itemView.findViewById(R.id.prPrice);
+            productTag = itemView.findViewById(R.id.prTag);
             editBtn = itemView.findViewById(R.id.editBtn);
             deleteBtn = itemView.findViewById(R.id.deleteBtn);
         }
