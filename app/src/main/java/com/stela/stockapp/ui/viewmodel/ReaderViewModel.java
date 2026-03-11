@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.os.Handler;
@@ -22,6 +23,13 @@ public class ReaderViewModel extends ViewModel {
 
     private final ReaderRepository readerRepository;
     private final TagRepository tagRepository;
+    private final MutableLiveData<List<Product>> productsLiveData = new MutableLiveData<>();
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    public LiveData<List<Product>> getProductsLiveData() {
+        return productsLiveData;
+    }
+
     private final MutableLiveData<List<Tag>> tagsLiveData = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<Boolean> connectedLiveData = new MutableLiveData<>(false);
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
@@ -29,6 +37,7 @@ public class ReaderViewModel extends ViewModel {
     private final Map<String, Long> lastReadMap = new HashMap<>();
     private final Map<String, Product> productCache = new HashMap<>();
     private static final long READ_COOLDOWN_MS = 300;
+
     public ReaderViewModel(ReaderRepository readerRepository, TagRepository tagRepository) {
         this.readerRepository = readerRepository;
         this.tagRepository = tagRepository;
@@ -131,16 +140,17 @@ public class ReaderViewModel extends ViewModel {
         tagsLiveData.postValue(current);
     }
 
-    public void loadProducts(Runnable onLoaded) {
-        Executors.newSingleThreadExecutor().execute(() -> {
-            List<Product> products = tagRepository.getAllProducts();
+    public void loadProducts() {
+        tagRepository.getAllProducts().observeForever(products -> {
+            if (products == null) return;
+
+
             productCache.clear();
             for (Product p : products) {
                 productCache.put(p.getTagId().trim().toUpperCase(), p);
             }
-            if (onLoaded != null) {
-                new Handler(Looper.getMainLooper()).post(onLoaded);
-            }
+            productsLiveData.postValue(products);
         });
+
     }
 }

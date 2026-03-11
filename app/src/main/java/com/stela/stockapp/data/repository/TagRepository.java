@@ -1,20 +1,16 @@
 package com.stela.stockapp.data.repository;
 
-import android.app.Activity;
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
-
+import androidx.lifecycle.MutableLiveData;
 import com.stela.stockapp.data.local.AppDataBase;
 import com.stela.stockapp.data.local.ProductsDao;
 import com.stela.stockapp.data.local.TagsDao;
 import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.model.tag.TagEntity;
-
-import java.lang.reflect.Executable;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 public class TagRepository {
 
@@ -34,18 +30,28 @@ public class TagRepository {
         allTags = tagsDao.getAll();
     }
 
-    public List<Product> getAllProducts() {
-        return productDao.getAllProducts();
-    }
+    public LiveData<List<Product>> getAllProducts() {
+        MutableLiveData<List<Product>> liveData = new MutableLiveData<>();
+        executor.execute(() -> {
+            List<Product> products = productDao.getAllProducts();
+            liveData.postValue(products);
+        });
 
+        return liveData;
+    }
 
 
     public LiveData<List<TagEntity>> getAllTags(){
         return allTags;
     }
 
-    public Product getProductByTag(String tag) {
-        return tagsDao.findProductByTag(tag);
+    public LiveData<Product> getProductByTag(String tag) {
+       MutableLiveData<Product> liveData = new MutableLiveData<>();
+       executor.execute(() -> {
+           Product product = tagsDao.findProductByTag(tag);
+           liveData.postValue(product);
+       });
+       return liveData;
     }
 
     public void insert(TagEntity tag) {
@@ -71,9 +77,11 @@ public class TagRepository {
         executor.execute(tagsDao::deleteAll);
     }
 
-    public TagEntity findById(String tagId) {
-        return tagsDao.findById(tagId);
+    public void findById(String tagId, Consumer<TagEntity> callback) {
+        executor.execute(() -> {
+            TagEntity tag = tagsDao.findById(tagId);
+            callback.accept(tag);
+        });
     }
-
 
 }

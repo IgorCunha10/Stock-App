@@ -84,7 +84,7 @@ public class ReaderActivity extends AppCompatActivity {
         initObservers();
 
 
-        readerViewModel.loadProducts(() -> fabScanTag.setEnabled(true));
+        readerViewModel.loadProducts();
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
