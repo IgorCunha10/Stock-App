@@ -58,10 +58,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView productName,
-                 productDescription,
-                 productTag,
-                 productId,
-                 productPrice;
+                productDescription,
+                productTag,
+                productId,
+                productPrice;
         ImageButton editBtn, deleteBtn;
 
         public ProductViewHolder(View itemView) {
@@ -92,6 +92,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public interface OnItemActionListener {
         void onEditClick(ProductDto product);
+
         void onDeleteClick(ProductDto product);
     }
 
