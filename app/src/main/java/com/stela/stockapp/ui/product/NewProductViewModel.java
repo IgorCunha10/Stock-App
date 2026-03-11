@@ -8,10 +8,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.stela.stockapp.data.local.AppDataBase;
 import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.model.tag.TagEntity;
 import com.stela.stockapp.data.repository.ProductsRepository;
-import com.stela.stockapp.util.DbApplication;
+import com.stela.stockapp.data.model.util.DbApplication;
 
 public class NewProductViewModel extends AndroidViewModel {
 
@@ -21,8 +22,10 @@ public class NewProductViewModel extends AndroidViewModel {
     public NewProductViewModel(@NonNull Application application) {
         super(application);
 
-        DbApplication app = (DbApplication) application;
-        repository = app.container.productsRepository;
+        this.repository = new ProductsRepository(AppDataBase.getInstance(application));
+        //
+//        DbApplication app = (DbApplication) application;
+//        repository = app.container.productsRepository;
 
     }
 

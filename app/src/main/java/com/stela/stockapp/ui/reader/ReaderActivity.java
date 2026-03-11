@@ -69,77 +69,39 @@ public class ReaderActivity extends AppCompatActivity {
             isSelectMode = true;
         }
 
-        initView();
-        initRecyclerView();
-        initActivityResults();
 
         ReaderRepository readerRepository = new ReaderRepository(this);
         AppDataBase db = AppDataBase.getInstance(this);
         TagRepository tagRepository = new TagRepository(db);
 
-        ReaderViewModelFactory factory =
-                new ReaderViewModelFactory(readerRepository, tagRepository);
 
-        readerViewModel = new ViewModelProvider(this, factory)
-                .get(ReaderViewModel.class);
+        initView();
+        initRecyclerView();
+        initListeners();
+        initActivityResults();
+        initViewModel(readerRepository, tagRepository);
 
-        readerViewModel.getError().observe(this, msg ->
-                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-        );
+        initObservers();
 
-        readerViewModel.getTags().observe(this, tags -> {
-            readerAdapter.submitList(tags);
-        });
-
-        readerViewModel.isConnected().observe(this, connected -> {
-            btnConnect.setText(connected ? "Connected" : "Connect");
-            Toast.makeText(this,
-                    connected ? "Reader Connected" : "Connect the Reader",
-                    Toast.LENGTH_SHORT).show();
-        });
-
-        readerViewModel.getProductLiveData().observe(this, product -> {
-            if (product != null) {
-                String message = "Tag já cadastrada! Produto: " + product.getProductName();
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-                speak(message);
-            }
-        });
-
-        readerViewModel.getProductLiveData().observe(this, product -> {
-            if (product != null) {
-                Toast.makeText(this,
-                        "Tag já cadastrada! Produto: " + product.getProductName(),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        readerViewModel.getError().observe(this, message -> {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-            speak(message);
-        });
 
         readerViewModel.loadProducts(() -> fabScanTag.setEnabled(true));
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        initListeners();
+
 
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
 
-        tts = new TextToSpeech(this, status -> {
-            if(status == TextToSpeech.SUCCESS) {
-                int result = tts.setLanguage(new Locale("pt", "BR"));
-                if(result == TextToSpeech.LANG_MISSING_DATA ||
-                        result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Toast.makeText(this, "TTS is not suported in this device", Toast.LENGTH_SHORT).show();
+         initTts();
 
-                }
-            } else {
-                Toast.makeText(this, "Failed to initialize TTs", Toast.LENGTH_SHORT).show();
-            }
-        });
+    }
 
+    private void initViewModel(ReaderRepository readerRepository, TagRepository tagRepository) {
+        ReaderViewModelFactory factory =
+                new ReaderViewModelFactory(readerRepository, tagRepository);
+
+        readerViewModel = new ViewModelProvider(this, factory)
+                .get(ReaderViewModel.class);
     }
 
     private void speak(String text) {
@@ -147,6 +109,7 @@ public class ReaderActivity extends AppCompatActivity {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "tagRead");
         }
     }
+
     private void initView() {
         btnConnect = findViewById(R.id.btnConnect);
         btnClear = findViewById(R.id.btnClear);
@@ -225,6 +188,60 @@ public class ReaderActivity extends AppCompatActivity {
         });
     }
 
+    private void initObservers() {
+
+        readerViewModel.isConnected().observe(this, connected -> {
+            btnConnect.setText(connected ? "Connected" : "Connect");
+            Toast.makeText(this,
+                    connected ? "Reader Connected" : "Connect the Reader",
+                    Toast.LENGTH_SHORT).show();
+        });
+
+        readerViewModel.getProductLiveData().observe(this, product -> {
+            if (product != null) {
+                String message = "Tag já cadastrada! Produto: " + product.getProductName();
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                speak(message);
+            }
+        });
+
+        readerViewModel.getProductLiveData().observe(this, product -> {
+            if (product != null) {
+                Toast.makeText(this,
+                        "Tag já cadastrada! Produto: " + product.getProductName(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        readerViewModel.getError().observe(this, message -> {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            speak(message);
+        });
+
+
+        readerViewModel.getError().observe(this, msg ->
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        );
+
+        readerViewModel.getTags().observe(this, tags -> {
+            readerAdapter.submitList(tags);
+        });
+    }
+
+    private void initTts() {
+        tts = new TextToSpeech(this, status -> {
+            if(status == TextToSpeech.SUCCESS) {
+                int result = tts.setLanguage(new Locale("pt", "BR"));
+                if(result == TextToSpeech.LANG_MISSING_DATA ||
+                        result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Toast.makeText(this, "TTS is not suported in this device", Toast.LENGTH_SHORT).show();
+
+                }
+            } else {
+                Toast.makeText(this, "Failed to initialize TTs", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private void playStartBeep() {
         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 120);
     }
