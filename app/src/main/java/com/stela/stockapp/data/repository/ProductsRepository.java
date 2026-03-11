@@ -23,15 +23,8 @@ public class ProductsRepository {
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public static synchronized ProductsRepository getInstance(Context context) {
-        if (instance == null) {
-            instance = new ProductsRepository(context);
-        }
-        return instance;
-    }
 
-    private ProductsRepository(Context context) {
-        AppDataBase db = AppDataBase.getInstance(context);
+    public ProductsRepository(AppDataBase db) {
         productsDao = db.productsDao();
         tagsDao = db.tagsDao();
     }

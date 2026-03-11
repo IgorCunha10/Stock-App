@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.stela.stockapp.data.local.AppDataBase;
 import com.stela.stockapp.data.model.pojo.ProductTagJoin;
 import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.model.tag.TagEntity;
@@ -20,7 +21,9 @@ public class MainViewModel extends AndroidViewModel {
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        productRepository = ProductsRepository.getInstance(application);
+
+        AppDataBase db = AppDataBase.getInstance(application);
+        productRepository = new ProductsRepository(db);
         allProducts = productRepository.getAll();
     }
 
