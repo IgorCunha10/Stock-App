@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecycler() {
         productList = new ArrayList<>();
-        adapter = new ProductAdapter(this, productList);
+        adapter = new ProductAdapter(productList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

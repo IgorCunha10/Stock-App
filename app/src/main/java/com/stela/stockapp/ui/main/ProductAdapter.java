@@ -17,19 +17,17 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
-    private final Context context;
-
     private List<ProductDto> products;
     private OnItemActionListener listener;
 
-    public ProductAdapter(Context context, List<ProductDto> products) {
-        this.context = context;
+    public ProductAdapter(List<ProductDto> products) {
+
         this.products = products;
     }
 
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View productView = LayoutInflater.from(context)
+        View productView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_view, parent, false);
         return new ProductViewHolder(productView);
     }
