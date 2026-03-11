@@ -1,4 +1,4 @@
-package com.stela.stockapp.util;
+package com.stela.stockapp.data.model.util;
 
 import android.content.Context;
 
