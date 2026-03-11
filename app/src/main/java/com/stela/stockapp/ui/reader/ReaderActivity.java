@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
+import com.stela.stockapp.data.local.AppDataBase;
 import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.repository.ReaderRepository;
 import com.stela.stockapp.data.repository.TagRepository;
@@ -73,7 +74,8 @@ public class ReaderActivity extends AppCompatActivity {
         initActivityResults();
 
         ReaderRepository readerRepository = new ReaderRepository(this);
-        TagRepository tagRepository = new TagRepository(this);
+        AppDataBase db = AppDataBase.getInstance(this);
+        TagRepository tagRepository = new TagRepository(db);
 
         ReaderViewModelFactory factory =
                 new ReaderViewModelFactory(readerRepository, tagRepository);

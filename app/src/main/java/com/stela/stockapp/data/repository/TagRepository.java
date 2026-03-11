@@ -27,8 +27,8 @@ public class TagRepository {
     private final ProductsDao productDao;
 
 
-    public TagRepository(Activity activity) {
-        AppDataBase db = AppDataBase.getInstance(activity);
+    public TagRepository(AppDataBase db) {
+
         tagsDao = db.tagsDao();
         productDao = db.productsDao();
         allTags = tagsDao.getAll();
