@@ -129,47 +129,17 @@ public class NewProductActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(v -> {
 
-            String name = edtName.getText().toString().trim();
-            String description = edtDescription.getText().toString().trim();
-            String priceStr = edtPrice.getText().toString().trim();
+            String name = edtName.getText().toString();
+            String description = edtDescription.getText().toString();
+            String price = edtPrice.getText().toString();
 
-            if (name.isBlank() || description.isBlank()) {
-                Toast.makeText(this, "Complete all informations", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (selectedTag == null || selectedTag.isBlank()) {
-                Toast.makeText(this, "Scan a tag first", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            double price;
-            try {
-                price = Double.parseDouble(priceStr);
-            } catch (Exception e) {
-                Toast.makeText(this, "Insert a valid Price", Toast.LENGTH_SHORT).show();
-                return;
-            }
 
             if (isEdit) {
-
-                actualProduct.setProductName(name);
-                actualProduct.setProductDescription(description);
-                actualProduct.setProductPrice(price);
-              //  actualProduct.setProductTag(selectedTag);
-
-                viewModel.saveProduct(actualProduct, true);
+                viewModel.updateProduct(actualProduct, name, selectedTag, price);
 
             } else {
+                viewModel.createProduct(name, description, selectedTag, price);
 
-                Product newProduct = new Product(
-                        name,
-                        price,
-                        description,
-                        selectedTag
-                );
-
-                viewModel.saveProduct(newProduct, false);
             }
         });
 
