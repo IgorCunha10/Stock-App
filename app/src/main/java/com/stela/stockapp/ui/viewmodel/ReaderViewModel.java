@@ -11,6 +11,7 @@ import com.stela.stockapp.domain.Tag;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -34,7 +35,15 @@ public class ReaderViewModel extends ViewModel {
     private final MutableLiveData<Boolean> connectedLiveData = new MutableLiveData<>(false);
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<Product> productLiveData = new MutableLiveData<>();
-    private final Map<String, Long> lastReadMap = new HashMap<>();
+
+    private final Map<String, Long> lastReadMap = new LinkedHashMap<String, Long>(16,
+            0.75f, true) {
+        private static final int MAX_LAST_READ_ENTRIES = 1000;
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<String, Long> eldest) {
+        return size() > MAX_LAST_READ_ENTRIES;
+        }
+    };
     private final Map<String, Product> productCache = new HashMap<>();
     private static final long READ_COOLDOWN_MS = 300;
 
