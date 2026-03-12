@@ -112,18 +112,33 @@ public class ReaderViewModel extends ViewModel {
     public void checkTag(Tag tag) {
         if (!canProcess(tag.getEpc())) return;
 
-        Executors.newSingleThreadExecutor().execute(() -> {
-            String epc = tag.getEpc().trim().toUpperCase();
-            Product product = productCache.get(epc);
-
-            if (product != null) {
-                productLiveData.postValue(product);
-            } else {
-                errorLiveData.postValue("Tag não cadastrada");
+        readerRepository.findProductByEpc(tag.getEpc(), new ReaderRepository.ProductResultCallback() {
+            @Override
+            public void onSuccess(Product product) {
+                productLiveData.setValue(product);
+                addOrUpdateTag(tag);
             }
 
-            addOrUpdateTag(tag);
+            @Override
+            public void onError(String message) {
+                errorLiveData.setValue(message);
+                addOrUpdateTag(tag);
+            }
         });
+
+
+//        executor.execute(() -> {
+//            String epc = tag.getEpc().trim().toUpperCase();
+//            Product product = productCache.get(epc);
+//
+//            if (product != null) {
+//                productLiveData.postValue(product);
+//            } else {
+//                errorLiveData.postValue("Tag não cadastrada");
+//            }
+
+//            addOrUpdateTag(tag);
+//        });
     }
 
     private void addOrUpdateTag(Tag newTag) {
@@ -153,13 +168,12 @@ public class ReaderViewModel extends ViewModel {
         tagRepository.getAllProducts().observeForever(products -> {
             if (products == null) return;
 
-
-            productCache.clear();
+           executor.execute(() -> {productCache.clear();
             for (Product p : products) {
                 productCache.put(p.getTagId().trim().toUpperCase(), p);
             }
             productsLiveData.postValue(products);
         });
-
+        });
     }
-}
+    }
