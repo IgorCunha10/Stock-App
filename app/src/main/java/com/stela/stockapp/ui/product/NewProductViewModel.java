@@ -130,9 +130,7 @@ public class NewProductViewModel extends AndroidViewModel {
         } else {
         repository.insertProductWithTag(product, () -> saveSuccess.setValue(true));
         }
-
     }
-
 
 }
 
