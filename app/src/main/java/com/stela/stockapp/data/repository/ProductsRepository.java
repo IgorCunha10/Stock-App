@@ -37,7 +37,7 @@ public class ProductsRepository {
         return productsDao.getAllProductsWithTag();
     }
 
-    public void insertProductWithTag(Product product) {
+    public void insertProductWithTag(Product product, Runnable callback) {
         executor.execute(() -> {
             TagEntity tagEntity = new TagEntity();
             tagEntity.setId(product.getTagId());
@@ -45,11 +45,19 @@ public class ProductsRepository {
             tagsDao.insert(tagEntity);
             long id = productsDao.insert(product);
             product.setId((int) id);
+
+            new android.os.Handler(android.os.Looper.getMainLooper())
+                    .post(callback);
         });
     }
 
-    public void updateProduct(Product product) {
-        executor.execute(() -> productsDao.update(product));
+    public void updateProduct(Product product, Runnable callback) {
+        executor.execute(() -> {
+            productsDao.update(product);
+
+            new android.os.Handler(android.os.Looper.getMainLooper())
+                    .post(callback);
+        });
     }
 
     public void deleteProduct(Product product) {

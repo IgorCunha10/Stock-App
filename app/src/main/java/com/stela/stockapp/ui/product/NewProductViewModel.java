@@ -126,14 +126,10 @@ public class NewProductViewModel extends AndroidViewModel {
     public void saveProduct(Product product, boolean isEdit) {
 
         if (isEdit) {
-            repository.updateProduct(product);
+          repository.updateProduct(product, () -> saveSuccess.setValue(true) );
         } else {
-            TagEntity tagEntity = new TagEntity();
-            tagEntity.setId(product.getTagId());
-            repository.insertProductWithTag(product);
+        repository.insertProductWithTag(product, () -> saveSuccess.setValue(true));
         }
-
-        saveSuccess.setValue(true);
 
     }
 
