@@ -17,6 +17,7 @@ import com.stela.stockapp.R;
 import com.stela.stockapp.data.model.product.ProductDto;
 import com.stela.stockapp.data.model.util.Mapper;
 import com.stela.stockapp.ui.product.NewProductActivity;
+import com.stela.stockapp.ui.product.ProductAdapter;
 import com.stela.stockapp.ui.reader.ReaderActivity;
 
 import java.util.ArrayList;

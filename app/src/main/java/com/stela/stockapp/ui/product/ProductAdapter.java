@@ -1,6 +1,5 @@
-package com.stela.stockapp.ui.main;
+package com.stela.stockapp.ui.product;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,21 +7,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stela.stockapp.R;
 import com.stela.stockapp.data.model.product.ProductDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
-    private List<ProductDto> products;
+    private List<ProductDto> products = new ArrayList<>();
     private OnItemActionListener listener;
 
     public ProductAdapter(List<ProductDto> products) {
 
-        this.products = products;
+        this.products = products != null ? products : new ArrayList<>();
     }
 
     @Override
@@ -48,7 +49,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.bind(product);
     }
-
     @Override
     public int getItemCount() {
         return products != null ? products.size() : 0;
@@ -84,8 +84,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public void setProductList(List<ProductDto> products) {
-        this.products = products;
-        notifyDataSetChanged();
+
+        //        this.products = products;
+
+        DiffUtil.Callback diffCallback =
+                new ProductDiffCallback(this.products, products);
+
+        DiffUtil.DiffResult diffResult =
+                DiffUtil.calculateDiff(diffCallback);
+
+        this.products.clear();
+        this.products.addAll(products);
+
+        diffResult.dispatchUpdatesTo(this);
+
     }
 
     public interface OnItemActionListener {
