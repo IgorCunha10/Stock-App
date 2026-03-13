@@ -4,81 +4,90 @@ import android.content.Context;
 
 import com.stela.stockapp.data.local.AppDataBase;
 import com.stela.stockapp.data.local.ProductsDao;
-import com.stela.stockapp.data.model.history.ProductHistory;
+import com.stela.stockapp.data.local.TagsDao;
+import com.stela.stockapp.data.model.pojo.ProductTagJoin;
 import com.stela.stockapp.data.model.product.Product;
+import com.stela.stockapp.data.model.tag.TagEntity;
+import com.stela.stockapp.ui.product.ProductCallback;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Transaction;
 
+import java.util.HashMap;
 import java.util.List;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ProductsRepository {
+import javax.security.auth.callback.Callback;
 
+public class ProductsRepository {
     private static ProductsRepository instance;
     private final ProductsDao productsDao;
-    private final HistoryRepository historyRepository;
+    private final TagsDao tagsDao;
+
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final HashMap<String, Product> cache = new HashMap<>();
 
-    public static synchronized ProductsRepository getInstance(Context context) {
-        if (instance == null) {
-            instance = new ProductsRepository(context);
-        }
-        return instance;
-    }
-
-    private ProductsRepository(Context context) {
-        AppDataBase db = AppDataBase.getInstance(context);
+    public ProductsRepository(AppDataBase db) {
         productsDao = db.productsDao();
-        historyRepository = HistoryRepository.getInstance(context);
+        tagsDao = db.tagsDao();
     }
 
-    public LiveData<List<Product>> getAll() {
-        return productsDao.getAll();
+    public LiveData<Product> findById(int id) {
+        return productsDao.findById(id);
     }
 
-    private ProductHistory createHistory(Product product, String action, int movedQty) {
-        ProductHistory history = new ProductHistory();
-        history.productId = product.getProductId();
-        history.productName = product.getProductName();
-        history.productDescription = product.getProductDescription();
-        history.productQuantity = product.getProductQuantity();
-        history.productPrice = product.getProductPrice();
-        history.action = action;
-        history.movedQuantity = movedQty;
-        history.timeStamp = System.currentTimeMillis();
-        return history;
+    public void getProductByTag(String tag, ProductCallback callback) {
+        if (cache.containsKey(tag)) {
+            callback.onSuccess(cache.get(tag));
+            return;
+        }
+
+        new Thread(() -> {
+            Product product = productsDao.getProductByTagId(tag);
+
+            if (product != null) {
+                cache.put(tag, product);
+                callback.onSuccess(product);
+            } else {
+                callback.onError("Tag não cadastrada");
+            }
+        }).start();
+
     }
 
-    public void addProduct(Product product) {
+    public LiveData<List<ProductTagJoin>> getAll() {
+        return productsDao.getAllProductsWithTag();
+    }
+
+    public void insertProductWithTag(Product product, Runnable callback) {
         executor.execute(() -> {
-            long id = productsDao.insert(product);
-            product.setProductId((int) id);
+            TagEntity tagEntity = new TagEntity();
+            tagEntity.setId(product.getTagId());
 
-            ProductHistory history = createHistory(product, "CREATE", 0);
-            historyRepository.insertHistory(history);
+            tagsDao.insert(tagEntity);
+            long id = productsDao.insert(product);
+            product.setId((int) id);
+
+            new android.os.Handler(android.os.Looper.getMainLooper())
+                    .post(callback);
         });
     }
 
-    public void updateProduct(Product product) {
+    public void updateProduct(Product product, Runnable callback) {
         executor.execute(() -> {
             productsDao.update(product);
 
-            ProductHistory history = createHistory(product, "EDIT", 0);
-            historyRepository.insertHistory(history);
+            new android.os.Handler(android.os.Looper.getMainLooper())
+                    .post(callback);
         });
     }
 
     public void deleteProduct(Product product) {
-        executor.execute(() -> {
-            productsDao.delete(product);
-
-            ProductHistory history = createHistory(product, "DELETE", 0);
-            historyRepository.insertHistory(history);
-        });
+        executor.execute(() -> productsDao.delete(product));
     }
 
-
+    public void deleteProductById(int id) {
+        executor.execute(() -> productsDao.deleteProduct(id));
+    }
 }
-

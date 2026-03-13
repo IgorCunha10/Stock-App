@@ -47,6 +47,7 @@ dependencies {
     annotationProcessor ("androidx.room:room-compiler:2.8.4")
     implementation(files("libs/grmt288-1.0.0.7.aar"))
     implementation("org.greenrobot:eventbus:3.3.1")
+    implementation("androidx.core:core-ktx:1.12.0")
 
 
 }

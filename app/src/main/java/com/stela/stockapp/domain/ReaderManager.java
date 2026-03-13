@@ -1,13 +1,12 @@
-package com.stela.stockapp.data.repository;
+package com.stela.stockapp.domain;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.grotg.hpp.otglibrary.exception.ReaderException;
 import com.grotg.hpp.otglibrary.otgreader.OtgReader;
 import com.grotg.hpp.otglibrary.param.EpcBean;
 
-public class ReaderRepository {
+public class ReaderManager {
 
     private final OtgReader otgReader;
 
@@ -15,7 +14,7 @@ public class ReaderRepository {
         void onTagRead(EpcBean epcBean);
     }
 
-    public ReaderRepository(Activity activity) {
+    public ReaderManager(Activity activity) {
         otgReader = new OtgReader(activity);
     }
 
@@ -27,7 +26,7 @@ public class ReaderRepository {
         try {
             otgReader.ScanTags();
         } catch (ReaderException e) {
-            throw new RuntimeException(e); // ou logar
+            throw new RuntimeException(e);
         }
     }
 
@@ -49,4 +48,6 @@ public class ReaderRepository {
         } catch (ReaderException ignored) {
         }
     }
+
+
 }

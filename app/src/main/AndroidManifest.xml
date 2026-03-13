@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-feature android:name="android.hardware.usb.host"
-                  android:required="true"
-        />
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.USB_PERMISSION" />
 
@@ -17,6 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.taginfo.TagInfo"
+            android:exported="false" />
         <activity
             android:name=".ui.reader.ReaderActivity"
             android:exported="false" />
@@ -31,15 +34,15 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
+
             <meta-data
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-                android:value="true"
-                />
-
+                android:value="true" />
         </activity>
     </application>
 

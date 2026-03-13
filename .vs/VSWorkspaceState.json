@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\src",
+    "\\app\\src\\main",
+    "\\app\\src\\main\\java",
+    "\\app\\src\\main\\java\\com",
+    "\\app\\src\\main\\java\\com\\stela",
+    "\\app\\src\\main\\java\\com\\stela\\stockapp",
+    "\\app\\src\\main\\java\\com\\stela\\stockapp\\data",
+    "\\app\\src\\main\\java\\com\\stela\\stockapp\\data\\model",
+    "\\app\\src\\main\\java\\com\\stela\\stockapp\\data\\model\\product"
+  ],
+  "SelectedNode": "\\app\\src\\main\\java\\com\\stela\\stockapp\\data\\model\\product\\Product.java",
+  "PreviewInSolutionExplorer": false
+}

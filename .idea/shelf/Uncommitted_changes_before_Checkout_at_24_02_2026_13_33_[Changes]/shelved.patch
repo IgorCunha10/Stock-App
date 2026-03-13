@@ -1,0 +1,39 @@
+Index: app/src/main/java/com/stela/stockapp/data/local/AppDataBase.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.stela.stockapp.data.local;\r\n\r\nimport static com.stela.stockapp.data.model.history.ProductHistory.MIGRATION_2_3;\r\n\r\nimport android.content.Context;\r\n\r\nimport androidx.room.Database;\r\nimport androidx.room.Room;\r\nimport androidx.room.RoomDatabase;\r\n\r\nimport com.stela.stockapp.data.model.history.ProductHistory;\r\nimport com.stela.stockapp.data.model.product.Product;\r\n\r\n@Database(entities = {Product.class, ProductHistory.class}, version = 3)\r\npublic abstract class AppDataBase extends RoomDatabase {\r\n\r\n    public abstract ProductsDao productsDao();\r\n\r\n    public abstract HistoryDao historyDao();\r\n\r\n    private static AppDataBase instance;\r\n\r\n\r\n    public static synchronized AppDataBase getInstance(Context context) {\r\n\r\n        if (instance == null) {\r\n            synchronized (AppDataBase.class) {\r\n                if (instance == null) {\r\n                    instance = Room.databaseBuilder(\r\n                                    context.getApplicationContext(),\r\n                                    AppDataBase.class,\r\n                                    \"estoque_db\"\r\n                            ).addMigrations(MIGRATION_2_3)\r\n\r\n                            .build();\r\n                }\r\n            }\r\n        }\r\n        return instance;\r\n    }\r\n\r\n\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/stela/stockapp/data/local/AppDataBase.java b/app/src/main/java/com/stela/stockapp/data/local/AppDataBase.java
+--- a/app/src/main/java/com/stela/stockapp/data/local/AppDataBase.java	(revision 1a3e687323653ef46253f78487300f9104ed19b9)
++++ b/app/src/main/java/com/stela/stockapp/data/local/AppDataBase.java	(date 1771611435403)
+@@ -31,7 +31,6 @@
+                                     AppDataBase.class,
+                                     "estoque_db"
+                             ).addMigrations(MIGRATION_2_3)
+-
+                             .build();
+                 }
+             }
+Index: app/src/main/java/com/stela/stockapp/data/model/product/Product.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.stela.stockapp.data.model.product;\r\n\r\nimport androidx.room.Entity;\r\nimport androidx.room.PrimaryKey;\r\n\r\nimport java.io.Serializable;\r\n\r\n\r\n@Entity(tableName = \"products\")\r\npublic class Product implements Serializable {\r\n\r\n    @PrimaryKey(autoGenerate = true)\r\n    public int productId;\r\n    public String productName, productDescription;\r\n    public int productQuantity;\r\n    public double productPrice;\r\n\r\n    public Product(String productName, String productDescription, int productQuantity, double productPrice) {\r\n\r\n        this.productName = productName;\r\n        this.productDescription = productDescription;\r\n        this.productQuantity = productQuantity;\r\n        this.productPrice = productPrice;\r\n    }\r\n\r\n    public Product() {\r\n    }\r\n\r\n    public void setProductName(String productName) {\r\n        this.productName = productName;\r\n    }\r\n\r\n    public String getProductName() {\r\n        return productName;\r\n    }\r\n\r\n    public void setProductId(int productId) {\r\n        this.productId = productId;\r\n    }\r\n\r\n    public int getProductId() {\r\n        return productId;\r\n    }\r\n\r\n    public void setProductDescription(String productDescription) {\r\n        this.productDescription = productDescription;\r\n    }\r\n\r\n    public String getProductDescription() {\r\n        return productDescription;\r\n    }\r\n\r\n    public void setProductQuantity(int productQuantity) {\r\n        this.productQuantity = productQuantity;\r\n    }\r\n\r\n    public int getProductQuantity() {\r\n        return productQuantity;\r\n    }\r\n\r\n    public void setProductPrice(double productPrice) {\r\n        this.productPrice = productPrice;\r\n    }\r\n\r\n    public double getProductPrice() {\r\n        return productPrice;\r\n    }\r\n\r\n\r\n}\r\n
+===================================================================
+diff --git a/app/src/main/java/com/stela/stockapp/data/model/product/Product.java b/app/src/main/java/com/stela/stockapp/data/model/product/Product.java
+--- a/app/src/main/java/com/stela/stockapp/data/model/product/Product.java	(revision 1a3e687323653ef46253f78487300f9104ed19b9)
++++ b/app/src/main/java/com/stela/stockapp/data/model/product/Product.java	(date 1771857638747)
+@@ -11,11 +11,13 @@
+ 
+     @PrimaryKey(autoGenerate = true)
+     public int productId;
++
+     public String productName, productDescription;
+     public int productQuantity;
+     public double productPrice;
+ 
+-    public Product(String productName, String productDescription, int productQuantity, double productPrice) {
++    public Product(String productName, String productDescription,
++                   int productQuantity, double productPrice) {
+ 
+         this.productName = productName;
+         this.productDescription = productDescription;
