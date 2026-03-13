@@ -1,4 +1,4 @@
-package com.stela.stockapp.domain;
+package com.stela.stockapp.domain.model;
 
 import androidx.annotation.NonNull;
 

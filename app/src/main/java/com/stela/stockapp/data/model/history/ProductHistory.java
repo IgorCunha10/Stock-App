@@ -41,21 +41,51 @@ public class ProductHistory {
     public String productTag;
 
     // Getters e Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public int getProductId() { return productId; }
-    public void setProductId(int productId) { this.productId = productId; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getProductAction() { return productAction; }
-    public void setProductAction(String productAction) { this.productAction = productAction; }
+    public int getProductId() {
+        return productId;
+    }
 
-    public int getMovedQuantity() { return movedQuantity; }
-    public void setMovedQuantity(int movedQuantity) { this.movedQuantity = movedQuantity; }
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
-    public long getTimeStamp() { return timeStamp; }
-    public void setTimeStamp(long timeStamp) { this.timeStamp = timeStamp; }
+    public String getProductAction() {
+        return productAction;
+    }
 
-    public String getProductTag() { return productTag; }
-    public void setProductTag(String productTag) { this.productTag = productTag; }
+    public void setProductAction(String productAction) {
+        this.productAction = productAction;
+    }
+
+    public int getMovedQuantity() {
+        return movedQuantity;
+    }
+
+    public void setMovedQuantity(int movedQuantity) {
+        this.movedQuantity = movedQuantity;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public String getProductTag() {
+        return productTag;
+    }
+
+    public void setProductTag(String productTag) {
+        this.productTag = productTag;
+    }
 }

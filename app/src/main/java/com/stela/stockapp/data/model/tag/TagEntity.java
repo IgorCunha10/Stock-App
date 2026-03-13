@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
 @Entity(tableName = "tags")
 public class TagEntity {
     @PrimaryKey
@@ -25,20 +26,20 @@ public class TagEntity {
         this.fabricationStamp = fabricationStamp;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
 
     }
 
-    public long getValidityStamp (){
+    public long getValidityStamp() {
         return validityStamp;
     }
 
-    public void setValidityStamp(long validity){
+    public void setValidityStamp(long validity) {
         this.validityStamp = validity;
     }
 

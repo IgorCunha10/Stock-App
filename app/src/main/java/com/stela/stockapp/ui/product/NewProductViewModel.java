@@ -39,7 +39,6 @@ public class NewProductViewModel extends AndroidViewModel {
         return tagError;
     }
 
-
     public NewProductViewModel(@NonNull Application application) {
         super(application);
 
@@ -87,10 +86,10 @@ public class NewProductViewModel extends AndroidViewModel {
 
 //        if(tag == null || tag.trim().isEmpty()) {
 //            tagError.setValue("Tag obrigatória");
-//            valid = false;
+//           valid = false;
 //        } else {
 //            tagError.setValue(null);
-//        }
+//       }
 
         return valid;
     }
@@ -109,8 +108,8 @@ public class NewProductViewModel extends AndroidViewModel {
     }
 
     public void updateProduct(Product product, String name,
-    String description, String price){
-        if(!validateProduct(name, description, price)) return;
+                              String description, String price) {
+        if (!validateProduct(name, description, price)) return;
 
         double parsedPrice = Double.parseDouble(price);
 
@@ -118,7 +117,7 @@ public class NewProductViewModel extends AndroidViewModel {
         product.setProductDescription(description);
         product.setProductPrice(parsedPrice);
 
-        saveProduct(product,true);
+        saveProduct(product, true);
 
     }
 
@@ -126,9 +125,9 @@ public class NewProductViewModel extends AndroidViewModel {
     public void saveProduct(Product product, boolean isEdit) {
 
         if (isEdit) {
-          repository.updateProduct(product, () -> saveSuccess.setValue(true) );
+            repository.updateProduct(product, () -> saveSuccess.setValue(true));
         } else {
-        repository.insertProductWithTag(product, () -> saveSuccess.setValue(true));
+            repository.insertProductWithTag(product, () -> saveSuccess.setValue(true));
         }
     }
 

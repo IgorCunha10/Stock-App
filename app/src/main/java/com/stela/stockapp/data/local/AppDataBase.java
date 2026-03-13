@@ -20,6 +20,7 @@ import com.stela.stockapp.data.model.tag.TagEntity;
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract ProductsDao productsDao();
+
     //public abstract HistoryDao historyDao();
     public abstract TagsDao tagsDao();
 

@@ -6,12 +6,12 @@ import com.stela.stockapp.data.model.product.ProductDto;
 
 import java.util.List;
 
-public class ProductDiffCallback extends DiffUtil.Callback{
+public class ProductDiffCallback extends DiffUtil.Callback {
 
     private final List<ProductDto> oldList;
     private final List<ProductDto> newList;
 
-    public ProductDiffCallback(List<ProductDto>oldList, List<ProductDto> newList) {
+    public ProductDiffCallback(List<ProductDto> oldList, List<ProductDto> newList) {
 
         this.oldList = oldList;
         this.newList = newList;

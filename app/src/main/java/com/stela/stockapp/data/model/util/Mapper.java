@@ -17,12 +17,12 @@ public class Mapper {
                 join.getDescription(),
                 join.getPrice()
 
-                );
+        );
     }
 
     public static List<ProductDto> toDtoList(List<ProductTagJoin> joins) {
         List<ProductDto> dtos = new ArrayList<>();
-        for(ProductTagJoin join : joins) {
+        for (ProductTagJoin join : joins) {
             dtos.add(toDto(join));
         }
 

@@ -26,7 +26,7 @@ public interface ProductsDao {
 
 
     @Query("SELECT * FROM products WHERE tag_id = :tagId LIMIT 1")
-    LiveData<Product> getProductByTagId(String tagId);
+    Product getProductByTagId(String tagId);
 
     @Query("SELECT products.id AS product_id, " +
             "products.product_name, " +

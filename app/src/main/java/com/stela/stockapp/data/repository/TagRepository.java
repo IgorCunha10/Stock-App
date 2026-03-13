@@ -2,11 +2,13 @@ package com.stela.stockapp.data.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 import com.stela.stockapp.data.local.AppDataBase;
 import com.stela.stockapp.data.local.ProductsDao;
 import com.stela.stockapp.data.local.TagsDao;
 import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.model.tag.TagEntity;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,17 +43,17 @@ public class TagRepository {
     }
 
 
-    public LiveData<List<TagEntity>> getAllTags(){
+    public LiveData<List<TagEntity>> getAllTags() {
         return allTags;
     }
 
     public LiveData<Product> getProductByTag(String tag) {
-       MutableLiveData<Product> liveData = new MutableLiveData<>();
-       executor.execute(() -> {
-           Product product = tagsDao.findProductByTag(tag);
-           liveData.postValue(product);
-       });
-       return liveData;
+        MutableLiveData<Product> liveData = new MutableLiveData<>();
+        executor.execute(() -> {
+            Product product = tagsDao.findProductByTag(tag);
+            liveData.postValue(product);
+        });
+        return liveData;
     }
 
     public void insert(TagEntity tag) {
@@ -68,7 +70,7 @@ public class TagRepository {
 
     public void delete(TagEntity tag) {
         executor.execute(() -> {
-                tagsDao.delete(tag);
+            tagsDao.delete(tag);
         });
 
     }

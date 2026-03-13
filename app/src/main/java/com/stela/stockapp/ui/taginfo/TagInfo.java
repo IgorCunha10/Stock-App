@@ -16,7 +16,6 @@ import com.stela.stockapp.R;
 public class TagInfo extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,15 +24,13 @@ public class TagInfo extends AppCompatActivity {
         initInsets();
     }
 
-   private void initInsets() {
+    private void initInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
-
-
 
 
 }

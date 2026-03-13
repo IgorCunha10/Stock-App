@@ -6,7 +6,7 @@ public class ProductDto {
     private double productPrice;
     private String tagNumber;
 
-    public ProductDto(int id, String tag, String productName,String productDescription,
+    public ProductDto(int id, String tag, String productName, String productDescription,
                       double productPrice) {
 
         this.id = id;
@@ -16,7 +16,7 @@ public class ProductDto {
         this.productPrice = productPrice;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
@@ -24,7 +24,7 @@ public class ProductDto {
         return tagNumber;
     }
 
-    public String getProductName(){
+    public String getProductName() {
         return productName;
     }
 

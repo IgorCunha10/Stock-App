@@ -12,7 +12,7 @@ public class TagDto {
         this.fabricationStamp = fabricationStamp;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 

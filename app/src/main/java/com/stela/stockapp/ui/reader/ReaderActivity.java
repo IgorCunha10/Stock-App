@@ -21,17 +21,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
 import com.stela.stockapp.data.local.AppDataBase;
 import com.stela.stockapp.data.model.product.Product;
-import com.stela.stockapp.data.repository.ReaderRepository;
+import com.stela.stockapp.data.repository.ProductsRepository;
+import com.stela.stockapp.domain.ReaderManager;
 import com.stela.stockapp.data.repository.TagRepository;
-import com.stela.stockapp.domain.Tag;
+import com.stela.stockapp.domain.model.Tag;
 import com.stela.stockapp.ui.main.MainViewModel;
 import com.stela.stockapp.ui.product.NewProductActivity;
 import com.stela.stockapp.ui.taginfo.TagInfo;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModel;
 import com.stela.stockapp.ui.viewmodel.ReaderViewModelFactory;
-import android.speech.tts.TextToSpeech;
 
-import org.w3c.dom.Text;
+import android.speech.tts.TextToSpeech;
 
 import java.util.Locale;
 
@@ -70,16 +70,17 @@ public class ReaderActivity extends AppCompatActivity {
         }
 
 
-        ReaderRepository readerRepository = new ReaderRepository(this);
+        ReaderManager readerManager = new ReaderManager(this);
         AppDataBase db = AppDataBase.getInstance(this);
         TagRepository tagRepository = new TagRepository(db);
+        ProductsRepository productRepository = new ProductsRepository(db);
 
 
         initView();
         initRecyclerView();
         initListeners();
         initActivityResults();
-        initViewModel(readerRepository, tagRepository);
+        initViewModel(readerManager, tagRepository, productRepository);
 
         initObservers();
 
@@ -89,23 +90,23 @@ public class ReaderActivity extends AppCompatActivity {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
 
-
         toneGenerator = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
 
-         initTts();
+        initTts();
 
     }
 
-    private void initViewModel(ReaderRepository readerRepository, TagRepository tagRepository) {
+    private void initViewModel(ReaderManager readerManager, TagRepository tagRepository, ProductsRepository
+            productsRepository) {
         ReaderViewModelFactory factory =
-                new ReaderViewModelFactory(readerRepository, tagRepository);
+                new ReaderViewModelFactory(readerManager, tagRepository, productsRepository);
 
         readerViewModel = new ViewModelProvider(this, factory)
                 .get(ReaderViewModel.class);
     }
 
     private void speak(String text) {
-        if(tts != null) {
+        if (tts != null) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "tagRead");
         }
     }
@@ -206,11 +207,12 @@ public class ReaderActivity extends AppCompatActivity {
         });
 
         readerViewModel.getProductLiveData().observe(this, product -> {
-            if (product != null) {
-                Toast.makeText(this,
-                        "Tag já cadastrada! Produto: " + product.getProductName(),
-                        Toast.LENGTH_LONG).show();
-            }
+//            if (product != null) {
+            Toast.makeText(this,
+                    "Tag já cadastrada! Produto: " + product.getProductName(),
+                    Toast.LENGTH_LONG).show();
+//           }
+
         });
 
         readerViewModel.getError().observe(this, message -> {
@@ -230,9 +232,9 @@ public class ReaderActivity extends AppCompatActivity {
 
     private void initTts() {
         tts = new TextToSpeech(this, status -> {
-            if(status == TextToSpeech.SUCCESS) {
+            if (status == TextToSpeech.SUCCESS) {
                 int result = tts.setLanguage(new Locale("pt", "BR"));
-                if(result == TextToSpeech.LANG_MISSING_DATA ||
+                if (result == TextToSpeech.LANG_MISSING_DATA ||
                         result == TextToSpeech.LANG_NOT_SUPPORTED) {
                     Toast.makeText(this, "TTS is not suported in this device", Toast.LENGTH_SHORT).show();
 
@@ -242,6 +244,7 @@ public class ReaderActivity extends AppCompatActivity {
             }
         });
     }
+
     private void playStartBeep() {
         toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 120);
     }
@@ -252,7 +255,7 @@ public class ReaderActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if(tts != null) {
+        if (tts != null) {
             tts.stop();
             tts.shutdown();
 

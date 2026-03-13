@@ -89,16 +89,14 @@ public class Product implements Serializable {
         return productPrice;
     }
 
-    public void setTagId(String tagId){
+    public void setTagId(String tagId) {
         this.tagId = tagId;
 
     }
-    public String getTagId(){
+
+    public String getTagId() {
         return tagId;
     }
-
-
-
 
 
 }
