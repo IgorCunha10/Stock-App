@@ -206,24 +206,10 @@ public class ReaderActivity extends AppCompatActivity {
             }
         });
 
-        readerViewModel.getProductLiveData().observe(this, product -> {
-//            if (product != null) {
-            Toast.makeText(this,
-                    "Tag já cadastrada! Produto: " + product.getProductName(),
-                    Toast.LENGTH_LONG).show();
-//           }
-
-        });
-
         readerViewModel.getError().observe(this, message -> {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             speak(message);
         });
-
-
-        readerViewModel.getError().observe(this, msg ->
-                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-        );
 
         readerViewModel.getTags().observe(this, tags -> {
             readerAdapter.submitList(tags);
