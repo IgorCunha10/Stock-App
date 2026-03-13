@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
@@ -11,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.stela.stockapp.R;
-import com.stela.stockapp.domain.Tag;
+import com.stela.stockapp.domain.model.Tag;
 
 public class ReaderAdapter extends ListAdapter<Tag, ReaderAdapter.ReaderViewHolder> {
 
     public interface OnTagActionListener {
         void onAddProductClick(Tag tag);
+
         void onInfoClick(Tag tag);
     }
 

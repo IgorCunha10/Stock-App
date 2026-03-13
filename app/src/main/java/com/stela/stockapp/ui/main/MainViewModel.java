@@ -33,7 +33,8 @@ public class MainViewModel extends AndroidViewModel {
 
     public void addProduct(Product product) {
 
-        productRepository.insertProductWithTag(product, () ->{});
+        productRepository.insertProductWithTag(product, () -> {
+        });
     }
 
 

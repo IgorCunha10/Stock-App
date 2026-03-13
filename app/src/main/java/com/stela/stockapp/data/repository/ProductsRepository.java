@@ -8,13 +8,17 @@ import com.stela.stockapp.data.local.TagsDao;
 import com.stela.stockapp.data.model.pojo.ProductTagJoin;
 import com.stela.stockapp.data.model.product.Product;
 import com.stela.stockapp.data.model.tag.TagEntity;
+import com.stela.stockapp.ui.product.ProductCallback;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Transaction;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.security.auth.callback.Callback;
 
 public class ProductsRepository {
     private static ProductsRepository instance;
@@ -22,15 +26,34 @@ public class ProductsRepository {
     private final TagsDao tagsDao;
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-
+    private final HashMap<String, Product> cache = new HashMap<>();
 
     public ProductsRepository(AppDataBase db) {
         productsDao = db.productsDao();
         tagsDao = db.tagsDao();
     }
 
-    public LiveData<Product> findById(int id){
+    public LiveData<Product> findById(int id) {
         return productsDao.findById(id);
+    }
+
+    public void getProductByTag(String tag, ProductCallback callback) {
+        if (cache.containsKey(tag)) {
+            callback.onSuccess(cache.get(tag));
+            return;
+        }
+
+        new Thread(() -> {
+            Product product = productsDao.getProductByTagId(tag);
+
+            if (product != null) {
+                cache.put(tag, product);
+                callback.onSuccess(product);
+            } else {
+                callback.onError("Tag não cadastrada");
+            }
+        }).start();
+
     }
 
     public LiveData<List<ProductTagJoin>> getAll() {
@@ -66,4 +89,5 @@ public class ProductsRepository {
 
     public void deleteProductById(int id) {
         executor.execute(() -> productsDao.deleteProduct(id));
-    }}
+    }
+}

@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.stela.stockapp.data.model.product.Product;
-import com.stela.stockapp.data.repository.ReaderRepository;
+import com.stela.stockapp.data.repository.ProductsRepository;
+import com.stela.stockapp.domain.ReaderManager;
 import com.stela.stockapp.data.repository.TagRepository;
-import com.stela.stockapp.domain.Tag;
+import com.stela.stockapp.domain.model.Tag;
+import com.stela.stockapp.ui.product.ProductCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +19,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.os.Handler;
-import android.os.Looper;
-
 public class ReaderViewModel extends ViewModel {
 
-    private final ReaderRepository readerRepository;
+    private final ReaderManager readerManager;
+    private final ProductsRepository productsRepository;
+    private String scannedTag;
     private final TagRepository tagRepository;
     private final MutableLiveData<List<Product>> productsLiveData = new MutableLiveData<>();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -39,21 +40,27 @@ public class ReaderViewModel extends ViewModel {
     private final Map<String, Long> lastReadMap = new LinkedHashMap<String, Long>(16,
             0.75f, true) {
         private static final int MAX_LAST_READ_ENTRIES = 1000;
+
         @Override
         protected boolean removeEldestEntry(Map.Entry<String, Long> eldest) {
-        return size() > MAX_LAST_READ_ENTRIES;
+            return size() > MAX_LAST_READ_ENTRIES;
         }
     };
     private final Map<String, Product> productCache = new HashMap<>();
     private static final long READ_COOLDOWN_MS = 300;
 
-    public ReaderViewModel(ReaderRepository readerRepository, TagRepository tagRepository) {
-        this.readerRepository = readerRepository;
-        this.tagRepository = tagRepository;
+    public ReaderViewModel(ReaderManager readerManager,
+                           TagRepository tagRepository,
+                           ProductsRepository productsRepository) {
 
-        readerRepository.setOnTagRead(epcBean -> {
+        this.readerManager = readerManager;
+        this.tagRepository = tagRepository;
+        this.productsRepository = productsRepository;
+
+        readerManager.setOnTagRead(epcBean -> {
             Tag tag = new Tag(epcBean);
             checkTag(tag);
+
         });
     }
 
@@ -76,12 +83,12 @@ public class ReaderViewModel extends ViewModel {
 
 
     public void connect() {
-        readerRepository.connect((success, message) -> connectedLiveData.postValue(success));
+        readerManager.connect((success, message) -> connectedLiveData.postValue(success));
     }
 
     public void startScan() {
         try {
-            readerRepository.startScan();
+            readerManager.startScan();
         } catch (Exception e) {
             errorLiveData.postValue("Erro ao iniciar scan");
         }
@@ -89,7 +96,7 @@ public class ReaderViewModel extends ViewModel {
 
     public void stopScan() {
         try {
-            readerRepository.stopScan();
+            readerManager.stopScan();
         } catch (Exception e) {
             errorLiveData.postValue("Erro ao parar scan");
         }
@@ -111,34 +118,29 @@ public class ReaderViewModel extends ViewModel {
 
     public void checkTag(Tag tag) {
         if (!canProcess(tag.getEpc())) return;
+//
+        String epc = tag.getEpc();
 
-        readerRepository.findProductByEpc(tag.getEpc(), new ReaderRepository.ProductResultCallback() {
+        if (productCache.containsKey(epc)) {
+            productLiveData.postValue(productCache.get(epc));
+            addOrUpdateTag(tag);
+            return;
+        }
+
+        productsRepository.getProductByTag(epc, new ProductCallback() {
             @Override
             public void onSuccess(Product product) {
-                productLiveData.setValue(product);
+                productCache.put(epc, product);
+                productLiveData.postValue(product);
                 addOrUpdateTag(tag);
             }
 
             @Override
             public void onError(String message) {
-                errorLiveData.setValue(message);
+                errorLiveData.postValue(message);
                 addOrUpdateTag(tag);
             }
         });
-
-
-//        executor.execute(() -> {
-//            String epc = tag.getEpc().trim().toUpperCase();
-//            Product product = productCache.get(epc);
-//
-//            if (product != null) {
-//                productLiveData.postValue(product);
-//            } else {
-//                errorLiveData.postValue("Tag não cadastrada");
-//            }
-
-//            addOrUpdateTag(tag);
-//        });
     }
 
     private void addOrUpdateTag(Tag newTag) {
@@ -162,18 +164,20 @@ public class ReaderViewModel extends ViewModel {
             current.add(first);
         }
         tagsLiveData.postValue(current);
+
     }
 
     public void loadProducts() {
         tagRepository.getAllProducts().observeForever(products -> {
             if (products == null) return;
 
-           executor.execute(() -> {productCache.clear();
-            for (Product p : products) {
-                productCache.put(p.getTagId().trim().toUpperCase(), p);
-            }
-            productsLiveData.postValue(products);
-        });
+            executor.execute(() -> {
+                productCache.clear();
+                for (Product p : products) {
+                    productCache.put(p.getTagId(), p);
+                }
+                productsLiveData.postValue(products);
+            });
         });
     }
-    }
+}
